@@ -13,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
-import library.controllers.BookController;
 import library.controllers.BorrowController;
 import library.models.Borrow;
 import library.utils.InvalidFileException;

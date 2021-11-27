@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import library.controllers.BorrowController;
 import library.controllers.ReaderController;
 import library.models.Reader;
 import library.utils.InvalidFileException;
@@ -224,13 +223,4 @@ private void setLabels() {
         lblReaderID.setText("ID: "+reader.getId());
                 
     }
-
-
-
-
-
-
-
-
-
 }
