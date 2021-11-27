@@ -7,7 +7,7 @@ package library.views;
 
 /**
  *
- * @author usr
+ * @author Francisco
  */
 public class BookRegister extends javax.swing.JInternalFrame {
 

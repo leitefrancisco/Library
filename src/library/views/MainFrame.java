@@ -21,7 +21,7 @@ import library.utils.InvalidFileException;
  *This Class is the Main Frame and it will control all the other frames, in order to open and change the view all internal frames will have this 
  * class as a parameter and this class controls what will be shown in its Desktop Pane
  * 
- * @author f.meireles
+ * @author Francisco
  * 
  */
 public class MainFrame extends javax.swing.JFrame {

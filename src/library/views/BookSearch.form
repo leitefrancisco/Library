@@ -127,7 +127,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnClearFilters" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-                  <Component id="btnLendBook" min="-2" pref="244" max="-2" attributes="0"/>
+                  <Component id="btnBorrowBook" min="-2" pref="244" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="154" max="-2" attributes="0"/>
                   <Component id="btnBookQueue" min="-2" pref="155" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
@@ -165,7 +165,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="btnBookQueue" max="32767" attributes="0"/>
-                      <Component id="btnLendBook" max="32767" attributes="0"/>
+                      <Component id="btnBorrowBook" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -238,12 +238,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboBoxGenreActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnLendBook">
+        <Component class="javax.swing.JButton" name="btnBorrowBook">
           <Properties>
             <Property name="text" type="java.lang.String" value="Borrow Selected Book"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLendBookActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBorrowBookActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnBookQueue">

@@ -23,7 +23,7 @@ import library.models.Book;
 
 /**
  *This view will show all the books in the system
- * @author f.meireles
+ * @author Francisco
  */
 public class BookSearch extends javax.swing.JInternalFrame {
     
@@ -35,9 +35,7 @@ public class BookSearch extends javax.swing.JInternalFrame {
         this.mf = mf;
         this.bc = new BookController();
         initComponents();
-        
     }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,7 +57,7 @@ public class BookSearch extends javax.swing.JInternalFrame {
         txtFieldAuthorSearch = new javax.swing.JTextField();
         btnSearchByAuthor = new javax.swing.JButton();
         comboBoxGenre = new javax.swing.JComboBox();
-        btnLendBook = new javax.swing.JButton();
+        btnBorrowBook = new javax.swing.JButton();
         btnBookQueue = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
 
@@ -155,10 +153,10 @@ public class BookSearch extends javax.swing.JInternalFrame {
             }
         });
 
-        btnLendBook.setText("Borrow Selected Book");
-        btnLendBook.addActionListener(new java.awt.event.ActionListener() {
+        btnBorrowBook.setText("Borrow Selected Book");
+        btnBorrowBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLendBookActionPerformed(evt);
+                btnBorrowBookActionPerformed(evt);
             }
         });
 
@@ -194,7 +192,7 @@ public class BookSearch extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnClearFilters)
                 .addGap(65, 65, 65)
-                .addComponent(btnLendBook, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnBorrowBook, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(154, 154, 154)
                 .addComponent(btnBookQueue, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -223,7 +221,7 @@ public class BookSearch extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnBookQueue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnLendBook, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnBorrowBook, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -270,7 +268,7 @@ public class BookSearch extends javax.swing.JInternalFrame {
             showAllBooks();
             showGenres();
             btnBookQueue.setEnabled(false);
-            btnLendBook.setEnabled(false);
+            btnBorrowBook.setEnabled(false);
         } catch (IOException ex) {
             Logger.getLogger(BookSearch.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -283,7 +281,10 @@ public class BookSearch extends javax.swing.JInternalFrame {
     private void btnSearchByTitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchByTitleActionPerformed
         showBooksByTitleSearch();
     }//GEN-LAST:event_btnSearchByTitleActionPerformed
-    
+    /**
+     * clear the filters in the view
+     * @param evt 
+     */
     private void btnClearFiltersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearFiltersActionPerformed
         try {
             showAllBooks();
@@ -294,18 +295,19 @@ public class BookSearch extends javax.swing.JInternalFrame {
         txtFieldTitleSearch.setText("");
         txtFieldAuthorSearch.setText("");
         comboBoxGenre.setSelectedIndex(0);
-        
     }//GEN-LAST:event_btnClearFiltersActionPerformed
-    
+
     private void btnSearchByAuthorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchByAuthorActionPerformed
         showBooksByAuthorSearch();
     }//GEN-LAST:event_btnSearchByAuthorActionPerformed
-
-    private void btnLendBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLendBookActionPerformed
+    /**
+     * goes to the next view (Detail Book) with the book selected
+     * @param evt 
+     */
+    private void btnBorrowBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrowBookActionPerformed
         if(new ReaderController().getAll().length==0){
             JOptionPane.showMessageDialog(this, "No Readers Registered to Borrow Book");
         return;
-        
         }
         int row = booksTable.getSelectedRow();
         if(row != -1){
@@ -315,8 +317,11 @@ public class BookSearch extends javax.swing.JInternalFrame {
         else{
             JOptionPane.showMessageDialog(this, "Please Select a book", "No Book Selected", 1);
         }
-    }//GEN-LAST:event_btnLendBookActionPerformed
-
+    }//GEN-LAST:event_btnBorrowBookActionPerformed
+    /**
+     *controls the genre shown in the table
+     * @param evt
+     */
     private void comboBoxGenreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxGenreActionPerformed
         String selectedGenre = (String) comboBoxGenre.getSelectedItem();
         if(selectedGenre.equals("Select Genre")){
@@ -327,7 +332,7 @@ public class BookSearch extends javax.swing.JInternalFrame {
             showBooksByGenre(selectedGenre);
         }
     }//GEN-LAST:event_comboBoxGenreActionPerformed
-
+    
     private void btnBookQueueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookQueueActionPerformed
         int row = booksTable.getSelectedRow();
         if(row != -1){
@@ -338,16 +343,19 @@ public class BookSearch extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Please Select a book", "No Book Selected", 1);
         }
     }//GEN-LAST:event_btnBookQueueActionPerformed
-
+    /**
+     * controls what options ara available for the selected book in the table
+     * @param evt 
+     */
     private void booksTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_booksTableMouseClicked
        
         if(new AvailabilityController().getById(getSelectedBook().getId()).getAmount() == 0){
             btnBookQueue.setEnabled(true);
-            btnLendBook.setEnabled(false);
+            btnBorrowBook.setEnabled(false);
         }
         else{
             btnBookQueue.setEnabled(false);
-            btnLendBook.setEnabled(true);
+            btnBorrowBook.setEnabled(true);
         }
     }//GEN-LAST:event_booksTableMouseClicked
     
@@ -355,8 +363,8 @@ public class BookSearch extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable booksTable;
     private javax.swing.JButton btnBookQueue;
+    private javax.swing.JButton btnBorrowBook;
     private javax.swing.JButton btnClearFilters;
-    private javax.swing.JButton btnLendBook;
     private javax.swing.JButton btnSearchByAuthor;
     private javax.swing.JButton btnSearchByTitle;
     private javax.swing.JComboBox comboBoxGenre;
@@ -369,17 +377,24 @@ public class BookSearch extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtFieldAuthorSearch;
     private javax.swing.JTextField txtFieldTitleSearch;
     // End of variables declaration//GEN-END:variables
-   
+   /**
+    * loads the genres in memory into the combo box
+    */
     private void showGenres(){
         String [] genres = bc.getGenres();
         comboBoxGenre.setModel(new javax.swing.DefaultComboBoxModel(genres));
     }
-    
+    /**
+     * gets all books in the memory and adds it to the table
+     * @throws IOException 
+     */
     private void showAllBooks() throws IOException{
         BooksTableModel model = new BooksTableModel(bc.getAll());
         setTableModel(model);
     }
-    
+    /**
+     * gets the books in memory that matches the title in the text Field
+     */
     private void showBooksByTitleSearch(){
         Book[] books = bc.getBooksByTitle(txtFieldTitleSearch.getText());
         if(books.length==0){
@@ -388,9 +403,10 @@ public class BookSearch extends javax.swing.JInternalFrame {
         else{BooksTableModel model = new BooksTableModel(books);
         setTableModel(model);
         }
-      
     }
-    
+    /**
+     * gets the books in memory that matches the author in the text Field
+     */
     private void showBooksByAuthorSearch() {
         Book[] books = bc.getBooksByAuthor(txtFieldAuthorSearch.getText());
         if(books.length==0){
@@ -399,11 +415,12 @@ public class BookSearch extends javax.swing.JInternalFrame {
         else{BooksTableModel model = new BooksTableModel(books);
         setTableModel(model);
         }
-     
     }
-        
-    private void setTableModel(BooksTableModel model){
-                
+     /**
+      * set the model received to refresh the table 
+      * @param model 
+      */   
+    private void setTableModel(BooksTableModel model){      
         Sorter sorter = new Sorter();
         model.setBooks(sorter.sortMoviesByTitle(model.getBooks()));
         booksTable.getTableHeader().addMouseListener(new MouseAdapter() {
@@ -432,11 +449,10 @@ public class BookSearch extends javax.swing.JInternalFrame {
         booksTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         booksTable.repaint();
     }
-    
-    private String getTxtFieldTitleSearchBox(){
-        return txtFieldTitleSearch.getText();
-    }
-    
+    /**
+     * gets the book in memory based in the genre selected in the combo box
+     * @param selectedGenre 
+     */
     private void showBooksByGenre(String selectedGenre) {
         Book[] books = bc.getBooksByGenre(selectedGenre);
         if(books.length==0){
@@ -446,20 +462,11 @@ public class BookSearch extends javax.swing.JInternalFrame {
         setTableModel(model);
         }
     }
-    
+    /**
+     * returns the selected book in the table
+     */
     private Book getSelectedBook(){
         int row = booksTable.getSelectedRow();
         return (Book) booksTable.getModel().getValueAt(row, 5);
-    }
-    
-    
-        
-        
-    
-    
-    
-    
-    
-    
-    
+    }    
 }

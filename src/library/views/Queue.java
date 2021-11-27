@@ -18,10 +18,10 @@ import library.models.Reader;
 import library.utils.Sorter;
 
 /**
- *
- * @author Xiquinho
+ *this view is responsible of showing the queue of the book selected
+ * @author Francisco
  */
-public class Queues extends javax.swing.JInternalFrame {
+public class Queue extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Queues
@@ -29,7 +29,7 @@ public class Queues extends javax.swing.JInternalFrame {
     private Book book;
     private MainFrame mf;
     private ReaderController rc = new ReaderController();
-    public Queues(MainFrame mf , Book book) {
+    public Queue(MainFrame mf , Book book) {
         this.mf = mf;
         this.book = book;
         initComponents();
@@ -96,7 +96,10 @@ public class Queues extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable readersTable;
     // End of variables declaration//GEN-END:variables
-
+/**
+ * set the model of the table 
+ * @param model 
+ */
 private void setTableModel(ReadersTableModel model){
         
         Sorter sorter = new Sorter();
@@ -122,9 +125,10 @@ private void setTableModel(ReadersTableModel model){
         readersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         readersTable.repaint();
     }
-    
-    private void showAllReaders() {
-        
+    /**
+     * show the readers in the queue
+     */
+    private void showQueue() {
         Reader[]readers = rc.getAll();
         ReadersTableModel model = new ReadersTableModel(readers);
         setTableModel(model);

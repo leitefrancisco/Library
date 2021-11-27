@@ -14,8 +14,8 @@ import library.models.Reader;
 import library.utils.InvalidFileException;
 
 /**
- *
- * @author Xiquinho
+ * This Class is to edit Reader information in the CSV
+ * @author Francisco
  */
 public class ReaderEdit extends javax.swing.JInternalFrame {
 
@@ -170,7 +170,10 @@ public class ReaderEdit extends javax.swing.JInternalFrame {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
-
+    /**
+     * this button will confirm the edits for the reader and will not update any empty field in the text fields
+     * @param evt 
+     */
     private void btnConfirmChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmChangesActionPerformed
         String newFirstName = txtFieldNewFirstName.getText().trim();
         String newLastName = txtFieldNewLastName.getText().trim();
@@ -216,7 +219,9 @@ public class ReaderEdit extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtFieldNewFirstName;
     private javax.swing.JTextField txtFieldNewLastName;
     // End of variables declaration//GEN-END:variables
-
+    /**
+     * set the labels with the current information of the reader
+     */
 private void setLabels() {
         lblReaderAddress.setText("Address: "+reader.getAddress());
         lblReaderName.setText("Full Name: " + reader.getFullName());

@@ -21,8 +21,8 @@ import library.models.Reader;
 import library.utils.InvalidFileException;
 
 /**
- *
- * @author usr
+ * This class will show the readers in the system
+ * @author Francisco
  */
 public class ReaderSearch extends javax.swing.JInternalFrame {
     
@@ -231,7 +231,10 @@ public class ReaderSearch extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Please Select a Reader", "No Reader Selected",1);
         }
     }//GEN-LAST:event_btnReaderBorrowsActionPerformed
-    
+    /**
+     * controls the available options for the selected reader in the table
+     * @param evt 
+     */
     private void readersTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_readersTableMouseClicked
         
         Reader r= getSelectedReader();
@@ -244,7 +247,10 @@ public class ReaderSearch extends javax.swing.JInternalFrame {
             btnDeactivateReader.setText("Activate Reader");
         }
     }//GEN-LAST:event_readersTableMouseClicked
-    
+    /**
+     * opens the Reader edit view
+     * @param evt 
+     */
     private void btnEditReaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditReaderActionPerformed
         if(readersTable.getSelectedRow()!=-1){
             Reader r = getSelectedReader();
@@ -254,9 +260,11 @@ public class ReaderSearch extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Please Select a Reader", "No Reader Selected",1);
         }
     }//GEN-LAST:event_btnEditReaderActionPerformed
-    
+    /**
+     * determine what is the action of the button depending on the view and the text of the button
+     * @param evt 
+     */
     private void btnToggleActiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnToggleActiveActionPerformed
-        
         if(btnToggleActive.getText().equals("See only Active Readers")){
             showActiveReaders();
             btnToggleActive.setText("See only Inactive Readers");
@@ -268,13 +276,15 @@ public class ReaderSearch extends javax.swing.JInternalFrame {
         }
         btnDeactivateReader.setEnabled(false);
     }//GEN-LAST:event_btnToggleActiveActionPerformed
-    
     private void btnShowAllReadersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowAllReadersActionPerformed
         showAllReaders();
         btnToggleActive.setText("See only Active Readers");
         btnDeactivateReader.setEnabled(false);
     }//GEN-LAST:event_btnShowAllReadersActionPerformed
-    
+    /**
+     * activate or deactivate reader depending on the current active condition of it
+     * @param evt 
+     */
     private void btnDeactivateReaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeactivateReaderActionPerformed
         try{
             if(getSelectedReader().getActive().equals("1")){
@@ -300,9 +310,6 @@ public class ReaderSearch extends javax.swing.JInternalFrame {
         }catch (IOException | InvalidFileException ex) {
             Logger.getLogger(ReaderSearch.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
     }//GEN-LAST:event_btnDeactivateReaderActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDeactivateReader;
@@ -319,7 +326,10 @@ public class ReaderSearch extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTable readersTable;
     // End of variables declaration//GEN-END:variables
-    
+    /**
+     * set the model to the table refreshing the view for the user
+     * @param model 
+     */
     private void setTableModel(ReadersTableModel model){
         
         Sorter sorter = new Sorter();
@@ -345,9 +355,10 @@ public class ReaderSearch extends javax.swing.JInternalFrame {
         readersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         readersTable.repaint();
     }
-    
+    /**
+     * get all the readers in the memory and adds to the table
+     */
     private void showAllReaders() {
-        
         Reader[]readers = rc.getAll();
         ReadersTableModel model = new ReadersTableModel(readers);
         setTableModel(model);
@@ -355,7 +366,9 @@ public class ReaderSearch extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "No Readers Registered");
         }
     }
-    
+    /**
+     * get only the active the readers in the memory and adds to the table
+     */
     private void showActiveReaders() {
         Reader[]readers = rc.getActiveReaders();
         ReadersTableModel model = new ReadersTableModel(readers);
@@ -363,9 +376,10 @@ public class ReaderSearch extends javax.swing.JInternalFrame {
         if(readers.length==0){
             JOptionPane.showMessageDialog(this, "No Readers");
         }
-        
     }
-    
+     /**
+     * get only the inactive the readers in the memory and adds to the table
+     */
     private void showInactiveReaders() {
         Reader[]readers = rc.getInactiveReaders();
         if(readers.length==0){
@@ -374,18 +388,11 @@ public class ReaderSearch extends javax.swing.JInternalFrame {
         ReadersTableModel model = new ReadersTableModel(readers);
         setTableModel(model);
     }
-    
-    
+    /**
+     * returns the selected reader in the table 
+     */
     private Reader getSelectedReader(){
         int row = readersTable.getSelectedRow();
         return (Reader) readersTable.getModel().getValueAt(row, 3);
-    }
-    
-    
-    
-    
-    
-    
-    
-    
+    }   
 }

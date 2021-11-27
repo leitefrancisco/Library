@@ -1,8 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 package library.views;
 
 import library.tableModels.ReadersTableModel;
@@ -18,11 +18,11 @@ import library.models.Reader;
 import library.utils.Sorter;
 
 /**
- *
- * @author Xiquinho
+ * this class will show the available readers to add in the queue for the book receive in this class
+ * @author Francisco
  */
 public class ReadersToAddInQueue extends javax.swing.JInternalFrame {
-
+    
     /**
      * Creates new form ReadersToAddInQueue
      */
@@ -35,7 +35,7 @@ public class ReadersToAddInQueue extends javax.swing.JInternalFrame {
         this.book = book;
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -92,6 +92,11 @@ public class ReadersToAddInQueue extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(readersTable);
 
         btnAddToQueue.setText("Add to Queue");
+        btnAddToQueue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddToQueueActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,17 +132,26 @@ public class ReadersToAddInQueue extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
-
+    
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
-       lblHead.setText(" Selec Reader to Enqueue for Book : "+book.getTitle());
-       showAllReaders();
+        lblHead.setText(" Selec Reader to Enqueue for Book : "+book.getTitle());
+        showAllReaders();
     }//GEN-LAST:event_formInternalFrameOpened
 
-
+    private void btnAddToQueueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToQueueActionPerformed
+        if(getSelectedReader().getActive().equals("0")){
+            JOptionPane.showMessageDialog(this, "This Reader is inactive, please go to Readers Search and Activate him/her");
+        }
+         else{
+             //add reader to queue
+         }
+    }//GEN-LAST:event_btnAddToQueueActionPerformed
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddToQueue;
     private javax.swing.JButton btnBack;
@@ -145,9 +159,12 @@ public class ReadersToAddInQueue extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblHead;
     private javax.swing.JTable readersTable;
     // End of variables declaration//GEN-END:variables
-
-
-private void setTableModel(ReadersTableModel model){
+    
+    /**
+     * set the model to the table
+     * @param model
+     */
+    private void setTableModel(ReadersTableModel model){
         
         Sorter sorter = new Sorter();
         model.setReaders(sorter.sortReadersByName(model.getReaders()));
@@ -172,8 +189,10 @@ private void setTableModel(ReadersTableModel model){
         readersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         readersTable.repaint();
     }
-
-private void showAllReaders() {
+    /**
+     *get all the readers in memory and add them to the queue
+     */
+    private void showAllReaders() {
         
         Reader[]readers = rc.getAll();
         ReadersTableModel model = new ReadersTableModel(readers);
@@ -182,4 +201,12 @@ private void showAllReaders() {
             JOptionPane.showMessageDialog(this, "No Readers Registered");
         }
     }
+    /**
+     * returns the reader selected in the table
+     */
+    private Reader getSelectedReader() {
+        return (Reader) readersTable.getModel().getValueAt(readersTable.getSelectedRow(), 3);
+    }
+    
+    
 }

@@ -15,8 +15,8 @@ import library.models.Book;
 import library.utils.Sorter;
 
 /**
- *
- * @author Xiquinho
+ * This view will receive a book as a parameter and will show the current queue for it
+ * @author Francisco
  */
 public class BookQueue extends javax.swing.JInternalFrame {
     
@@ -42,7 +42,6 @@ public class BookQueue extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         readersTable = new javax.swing.JTable();
-        btnBorrow = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
         btnRemoveFirst = new javax.swing.JButton();
         btnAddToQueue = new javax.swing.JButton();
@@ -78,8 +77,6 @@ public class BookQueue extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(readersTable);
 
-        btnBorrow.setText("Rent Book to Next in Queue");
-
         btnBack.setText("Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,8 +110,6 @@ public class BookQueue extends javax.swing.JInternalFrame {
                 .addContainerGap(55, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnBorrow, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
                 .addComponent(btnRemoveFirst, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53)
                 .addComponent(btnAddToQueue, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -125,12 +120,11 @@ public class BookQueue extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBorrow, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRemoveFirst, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAddToQueue, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(80, 80, 80)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(btnBack)
                 .addGap(23, 23, 23))
         );
@@ -158,15 +152,16 @@ public class BookQueue extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddToQueue;
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnBorrow;
     private javax.swing.JButton btnRemoveFirst;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable readersTable;
     // End of variables declaration//GEN-END:variables
     
-    
+    /**
+     * will set the model for the table 
+     * @param model 
+     */
     private void setTableModel(ReadersTableModel model){
-        
         Sorter sorter = new Sorter();
         model.setReaders(sorter.sortReadersByName(model.getReaders()));
         readersTable.getTableHeader().addMouseListener(new MouseAdapter() {
@@ -195,6 +190,11 @@ public class BookQueue extends javax.swing.JInternalFrame {
         readersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         readersTable.repaint();
     }
+    
+    /**
+     * gets the readers in the queue in the memory and created a model with it
+     * to be used in the setTableModel Method
+     */
     private void showBookQueue() {
         
 //      Reader[] readers = ModelsInMemory.getQueueOfBook(book.getId());

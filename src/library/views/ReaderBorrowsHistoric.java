@@ -6,18 +6,15 @@
 package library.views;
 
 import library.tableModels.BorrowsTableModel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import library.controllers.BorrowController;
-import library.utils.Sorter;
 import library.models.Reader;
 
 /**
- *
- * @author Xiquinho
+ *This class is responsible of showing the historic of a reader, all of its borrows
+ * @author Francisco
  */
 public class ReaderBorrowsHistoric extends javax.swing.JInternalFrame {
 
@@ -155,14 +152,19 @@ public class ReaderBorrowsHistoric extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblReaderID;
     private javax.swing.JLabel lblReaderName;
     // End of variables declaration//GEN-END:variables
-
+    /**
+     * sets the labels with the reader information in the memory
+     */
     private void setLabels() {
         lblReaderAddress.setText("Address: "+reader.getAddress());
         lblReaderName.setText("Full Name: " + reader.getFullName());
         lblReaderID.setText("ID: "+reader.getId());
                 
     }
-    
+    /**
+     * set the table model 
+     * @param model 
+     */
     private void setTableModel(BorrowsTableModel model){
         
 //        Sorter sorter = new Sorter();
@@ -178,7 +180,6 @@ public class ReaderBorrowsHistoric extends javax.swing.JInternalFrame {
 //                    model.setBorrows(sorter.sortBorrowsById(model.getBorrows()));
 //                    borrowsTable.repaint();
 //                }
-//
 //            }
 //        });
         borrowsTable.setModel(model);
@@ -191,7 +192,9 @@ public class ReaderBorrowsHistoric extends javax.swing.JInternalFrame {
         borrowsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         borrowsTable.repaint();
     }
-
+    /**
+     * get all borrow from the reader
+     */
     private void showAllBorrows() {
         BorrowsTableModel model = new BorrowsTableModel(new BorrowController().getBorrowsByReaderId(reader.getId()));
         setTableModel(model);

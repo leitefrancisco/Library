@@ -18,13 +18,12 @@ import library.models.Borrow;
 import library.utils.InvalidFileException;
 
 /**
- *
- * @author Xiquinho
+ * This view is responsible to show all the borrows that are in the memory 
+ * @author Francisco
  */
 public class Borrows extends javax.swing.JInternalFrame {
     private MainFrame mf;
     private BorrowController bc;
-    
     /**
      * Creates new form BookReturn
      */
@@ -32,7 +31,6 @@ public class Borrows extends javax.swing.JInternalFrame {
         this.bc = new BorrowController();
         this.mf = mf;
         initComponents();
-       
     }
     
     /**
@@ -199,10 +197,12 @@ public class Borrows extends javax.swing.JInternalFrame {
     
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         showAllBorrows();
-        btnReturn.setEnabled(false);
-        
+        btnReturn.setEnabled(false);                                                                         
     }//GEN-LAST:event_formInternalFrameOpened
-    
+    /**
+     * controls what are the options available for each borrow selected
+     * @param evt 
+     */
     private void borrowsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrowsTableMouseClicked
         int row = borrowsTable.getSelectedRow(); 
         Borrow b= (Borrow) borrowsTable.getModel().getValueAt(row, 4);
@@ -211,9 +211,7 @@ public class Borrows extends javax.swing.JInternalFrame {
         }
         else{
             btnReturn.setEnabled(false);
-        
         }
-        System.out.println(b);
     }//GEN-LAST:event_borrowsTableMouseClicked
     
     private void btnReturnAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnAllActionPerformed
@@ -233,15 +231,14 @@ public class Borrows extends javax.swing.JInternalFrame {
         int row = borrowsTable.getSelectedRow();
         Borrow borrow = (Borrow) borrowsTable.getModel().getValueAt(row, 4);
         returnBook(borrow);
-//        if(){
+//        if(book has queue show queue){
 //            
 //        }
         
     }//GEN-LAST:event_btnReturnActionPerformed
 
     private void btnReaderAndBookSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReaderAndBookSearchActionPerformed
-        showBorrowsByBookAndReader();
-        
+        showBorrowsByBookAndReader();        
     }//GEN-LAST:event_btnReaderAndBookSearchActionPerformed
 
     private void btnSearchBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchBookActionPerformed
@@ -276,9 +273,11 @@ public class Borrows extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtFieldReaderName;
     // End of variables declaration//GEN-END:variables
     
-    
+    /**
+     * refresh the table with the model set in the other methods in the class
+     * @param model 
+     */
     private void setTableModel(BorrowsTableModel model){
-        
 //        Sorter sorter = new Sorter();
 //        model.setBorrows(sorter.sortBorrowsById(model.getBorrows()));
 //        borrowsTable.getTableHeader().addMouseListener(new MouseAdapter() {
@@ -305,15 +304,24 @@ public class Borrows extends javax.swing.JInternalFrame {
         borrowsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         borrowsTable.repaint();
     }
+    /**
+     * get all borrows in the system to display in the table
+     */
     private void showAllBorrows(){
         BorrowsTableModel model = new BorrowsTableModel(bc.getAll());
         setTableModel(model);
     }
+    /**
+     * get only the borrows that were not returned yet in the memory to display in the table
+     */
     private void showBorrowsToReturn(){
         BorrowsTableModel model = new BorrowsTableModel(bc.getBorrowsToReturn());
         setTableModel(model);
     }
-    
+    /**
+     * calls the borrow controller to return the borrow
+     * @param borrow 
+     */
     private void returnBook(Borrow borrow)  {
         int n = JOptionPane.showConfirmDialog(this,"Confirm Return? \n\nBOOK: \n"+
                 borrow.getBookId()+" \nFrom:\n "+
@@ -326,7 +334,7 @@ public class Borrows extends javax.swing.JInternalFrame {
            
             try {
                 bc.returnBook(borrow.getId());
-//                if(){
+//                if(book has queue display){
 //                    
 //                }
                 this.repaint();
@@ -338,7 +346,9 @@ public class Borrows extends javax.swing.JInternalFrame {
              
         }
     }
-    
+    /**
+    *get borrow in the memory by the book title
+    */
     private void showBorrowsByBookTitleSearch(){
         Borrow[] borrows = bc.getBorrowsByBookTitle(txtFieldBookTitle.getText());
         if(borrows.length==0){
@@ -348,6 +358,9 @@ public class Borrows extends javax.swing.JInternalFrame {
         setTableModel(model);
         }
     }
+    /**
+     * get borrows in the memory by the reader name
+     */
     private void showBorrowsByReaderNameSearch(){
         Borrow[] borrows = bc.getBorrowsByReaderName(txtFieldReaderName.getText());
         if(borrows.length==0){
@@ -357,7 +370,9 @@ public class Borrows extends javax.swing.JInternalFrame {
         setTableModel(model);
         }
     }
-
+    /**
+     * get borrows by the book title and the reader name
+     */
     private void showBorrowsByBookAndReader() {
          Borrow[] borrows = bc.getBorrowsByBookAndReader(txtFieldBookTitle.getText(),txtFieldReaderName.getText());
         if(borrows.length==0){

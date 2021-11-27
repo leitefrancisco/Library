@@ -10,13 +10,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import library.controllers.ReaderController;
-import library.io.FileHandler;
-import library.models.Reader;
 import library.utils.InvalidFileException;
 
 /**
- *
- * @author usr
+ * this class is responsible to allow the user to register a new reader in the in the CSV
+ * @author Francisco
  */
 public class ReaderRegister extends javax.swing.JInternalFrame {
 
@@ -142,26 +140,34 @@ public class ReaderRegister extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * gets the information provided by the user and registers the new Reader
+     * @param evt 
+     */
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        ReaderController rc = new ReaderController();
-        int n = JOptionPane.showConfirmDialog(this,
-                "First Name: "+txtFirstName.getText()+"\nLast Name: "+txtLastName.getText()+"\nAddress: "+txtAddress.getText()+"\nConfirm Register?"  ,"Confirm Register",
-                JOptionPane.YES_NO_OPTION);
-        if(n==0){
-            
-            try {
-                rc.addNewReader(txtFirstName.getText(),txtLastName.getText(),txtAddress.getText());
-            } catch (IOException ex) {
-                Logger.getLogger(ReaderRegister.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InvalidFileException ex) {
-                Logger.getLogger(ReaderRegister.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        if(txtFirstName.getText().isEmpty()||txtLastName.getText().isEmpty()||txtAddress.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "No fields can be Empty");
         }
-        
-        JOptionPane.showMessageDialog(this, "Reader Registered!");
-        this.dispose();
-        this.mf.showReaderRegister();
+        else{
+            ReaderController rc = new ReaderController();
+            int n = JOptionPane.showConfirmDialog(this,
+                    "First Name: "+txtFirstName.getText().trim()+"\nLast Name: "+txtLastName.getText().trim()+"\nAddress: "+txtAddress.getText().trim()+"\nConfirm Register?"  ,"Confirm Register",
+                    JOptionPane.YES_NO_OPTION);
+            if(n==0){
+                
+                try {
+                    rc.addNewReader(txtFirstName.getText(),txtLastName.getText(),txtAddress.getText());
+                } catch (IOException ex) {
+                    Logger.getLogger(ReaderRegister.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InvalidFileException ex) {
+                    Logger.getLogger(ReaderRegister.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            JOptionPane.showMessageDialog(this, "Reader Registered!");
+            this.dispose();
+            this.mf.showReaderRegister();
+        }
     }//GEN-LAST:event_btnRegisterActionPerformed
 
 

@@ -23,8 +23,8 @@ import library.models.Reader;
 import library.utils.InvalidFileException;
 
 /**
- *
- * @author f.meireles
+ * This method will receive a book as a parameter and will show the readers available to borrow the book
+ * @author Francisco
  */
 public class BookDetail extends javax.swing.JInternalFrame {
     
@@ -262,7 +262,11 @@ public class BookDetail extends javax.swing.JInternalFrame {
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         showAllReaders();
     }//GEN-LAST:event_formInternalFrameOpened
-    
+    /**
+     * if the reader is inactive this action will display a message to the user to activate the reader otherwise
+     * it will complete the action and borrow the book to the reader
+     * @param evt 
+     */
     private void btnConfirmReaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmReaderActionPerformed
         if(getSelectedReader().getActive().equals("0")){
             JOptionPane.showMessageDialog(this, "This Reader is inactive, please go to Readers Search and Activate him/her");
@@ -300,7 +304,10 @@ public class BookDetail extends javax.swing.JInternalFrame {
     private void readersTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_readersTableMouseClicked
         
     }//GEN-LAST:event_readersTableMouseClicked
-
+    /**
+     * will cancel the operation and go back to the book search
+     * @param evt 
+     */
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
        this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
@@ -324,14 +331,19 @@ public class BookDetail extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblBookTitle;
     private javax.swing.JTable readersTable;
     // End of variables declaration//GEN-END:variables
-    
+    /**
+     * set the labels with the book information, therefore displaying the correct information to the user
+     */
     public void setLabels(){
         lblBookTitle.setText("TITLE: "+ book.getTitle());
         lblBookAuthor.setText("Author: "+ book.getAuthorLastName()+
                 ", " + book.getAuthorFirstName()+".");
         
     }
-    
+    /**
+     * this method will be used in other methods to refresh the readers table and update it with the desired information
+     * @param model 
+     */
     private void setTableModel(ReadersTableModel model){
         
         Sorter sorter = new Sorter();
@@ -365,7 +377,9 @@ public class BookDetail extends javax.swing.JInternalFrame {
         readersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         readersTable.repaint();
     }
-    
+    /**
+     * this method will get the readers in the memory and set a the table model with them
+     */
     private void showAllReaders() {
         
         Reader[]readers = new ReaderController().getAll();
@@ -376,6 +390,10 @@ public class BookDetail extends javax.swing.JInternalFrame {
         ReadersTableModel model = new ReadersTableModel(readers);
         setTableModel(model);
     }
+    
+    /** 
+     * returns the selected reader in the table
+     */
     private Reader getSelectedReader(){
        
         return (Reader) readersTable.getModel().getValueAt(readersTable.getSelectedRow(), 3);
