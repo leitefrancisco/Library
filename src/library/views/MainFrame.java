@@ -295,8 +295,8 @@ public class MainFrame extends javax.swing.JFrame {
      */
     void refreshMemory() {
         try {
-            new AvailabilityController().loadFile();
             new ReaderController().loadFile();
+            new AvailabilityController().loadFile();
             new BookController().loadFile();
             new BorrowController().loadFile();
             

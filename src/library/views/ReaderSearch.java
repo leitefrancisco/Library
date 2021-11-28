@@ -238,7 +238,6 @@ public class ReaderSearch extends javax.swing.JInternalFrame {
     private void readersTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_readersTableMouseClicked
         
         Reader r= getSelectedReader();
-        System.out.println(r);
         btnDeactivateReader.setEnabled(true);
         if(r.getActive().equals("1")){
             btnDeactivateReader.setText("Deactivate Reader");

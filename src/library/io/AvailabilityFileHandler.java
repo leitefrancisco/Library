@@ -7,6 +7,8 @@ package library.io;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import library.models.Availability;
 
 /**
@@ -29,7 +31,7 @@ public class AvailabilityFileHandler extends BaseFileHandler<Availability> {
 
     @Override
     protected Availability loadData(String line) {
-        String[] data = line.split(",",10);
+        String[] data = line.split(",", 10);
             String bookId = data[0];
             String amt = data[1];
             String queue = data[2];

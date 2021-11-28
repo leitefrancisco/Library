@@ -5,57 +5,50 @@
  */
 package library.models;
 
+import java.util.ArrayList;
+import library.utils.Queue;
+
  
 
 /**
- *
- * @author Xiquinho
+ *This class is the model for the availability of the book, it will store if the book is currently available and whether it has a queue or not
+ * @author Francisco
  */
 public class Availability extends BaseModel{
    
     private int amtAvailable;
-    private String[] readersId;
-        
+    private String[] waitReadersId;
+    private Queue<Reader> queue;    
     //Book_Id,Amount_Available,queue
 
     public Availability(String bookId, String amt, String queue) {
         super(bookId);
         this.amtAvailable = Integer.parseInt(amt);
-        
-        this.readersId = queue.split(";");
-        
+        if(queue == null || queue.equals("")){
+            this.waitReadersId = new String[0];
+        }else{ // "".split(";") [""]
+            this.waitReadersId = queue.split(";");
+        }
+        this.queue = new Queue<Reader>(10);
     }
-
+       
+    public Queue<Reader> getQueue() {
+        return queue;
+    }
+    
     public void setAmtAvailable(int amtAvailable) {
         this.amtAvailable = amtAvailable;
     }
 
     public String getCsvLine() {
-        return getId() +","+amtAvailable+","+String.join(";",  this.readersId    ); 
-    }
-//
-//    public String readQueueToString(){
-//        ArrayList<String> a = new ArrayList<>();
-//        Queue q = queue;
-//        String current = null;
-//        do {
-//            current = q.dequeue();
-//            if(current!=null){
-//                a.add(current);
-//            }
-//        }while(current!=null);
-//        
-//        if(queue.peakFirst()==null){
-//            System.out.println("Fodeu");
-//        }
-//        
-//        return ;
-//    }
-
+        if(this.queue.isEmpty()){
+             return getId() +","+amtAvailable+","; 
+        }
+        return getId() +","+amtAvailable+","+this.queue.toString(); 
+    } 
   
-
-    public String[] getReadersId() {
-        return readersId;
+    public String[] getWaitReadersId() {
+        return waitReadersId;
         
     }
 
@@ -64,5 +57,8 @@ public class Availability extends BaseModel{
     }
     
     
+    
+    
+    //0-)   []  1,2,3 fifo lifo
     
 }

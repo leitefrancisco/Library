@@ -108,6 +108,14 @@ public class BorrowController extends BaseController<Borrow>{
         
         return borrowsToReturn.toArray(new Borrow[borrowsToReturn.size()]);
     }
+
+    boolean readerAlreadyWithBook(String bookId, String readerId) {
+        for(Borrow b : getAll()){
+            if(b.getBookId().equals(bookId)&&b.getReaderId().equals(readerId)&&b.getReturnDate()==null)
+                return true;
+        }
+        return false;
+    }
     
     
     

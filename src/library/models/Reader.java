@@ -80,7 +80,7 @@ public class Reader extends BaseModel{
 
     @Override
     public String toString() {
-        return "Reader{" + "id=" + getId() + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", fullName=" + fullName + ", Active = " + active+'}';
+       return getId();
     }
 
     public String getCsvLine() {

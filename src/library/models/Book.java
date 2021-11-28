@@ -5,7 +5,6 @@
 */
 package library.models;
 
-import library.utils.Queue;
 
 /**
  *
@@ -14,7 +13,7 @@ import library.utils.Queue;
 public class Book extends BaseModel{
     
     
-    private Queue<Reader> queue;
+    
     private String authorFirstName;
     private String authorLastName;
     private String title;
@@ -37,13 +36,9 @@ public class Book extends BaseModel{
         this.title = title;
         this.genres = genres;
         this.authorFullName = authorFirstName + " " + authorLastName;
-        this.queue = new Queue<Reader>(10);
-        
     }
 
-    public void setQueue(Queue<Reader> queue) {
-        this.queue = queue;
-    }
+   
   
     
     public String getAuthorFirstName() {
@@ -100,12 +95,6 @@ public class Book extends BaseModel{
         return null;
     }
 
-    
-    public Queue<Reader> getQueue() {
-        return queue;
-    }
-
-    
     
     public String getCsvLine() {
         return getId()+","+authorFirstName+","+authorLastName+","+"\""+title+"\","+String.join("|", genres);

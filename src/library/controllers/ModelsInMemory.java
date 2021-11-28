@@ -39,7 +39,7 @@ class ModelsInMemory {
         borrows = b;
     }
     
-    static void setAvailability(Availability[] a) {
+    static void setAvailabilities(Availability[] a) {
         availabilities = a;
     }
     
@@ -52,7 +52,7 @@ class ModelsInMemory {
         return null;
     }
     
-    static Availability[] getAvailability() {
+    static Availability[] getAvailabilities() {
         return availabilities;
     }
     

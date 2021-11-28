@@ -10,8 +10,8 @@ import library.controllers.AvailabilityController;
 import library.models.Book;
 
 /**
- *
- * @author f.meireles
+ * this is the table model for the books and determines what information from the Book will be displayed in the table
+ * @author Francisco    
  */
 public class BooksTableModel extends AbstractTableModel {
     //https://docs.oracle.com/javase/tutorial/uiswing/components/table.html#data
@@ -33,7 +33,6 @@ public class BooksTableModel extends AbstractTableModel {
     public void setBooks(Book[] books) {
         this.books = books;
     }
-    
     
     public String getColumnName(int col) {
         return columnNames[col];

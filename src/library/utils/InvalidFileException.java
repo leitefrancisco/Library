@@ -6,8 +6,8 @@
 package library.utils;
 
 /**
- *
- * @author Xiquinho
+ *This class is an exception that validates the file that the file handlers will deal with when writing and reading information 
+ * @author Francisco
  */
 public class InvalidFileException extends Exception {
 
@@ -16,5 +16,4 @@ public class InvalidFileException extends Exception {
         super("The file "+fileName+ " is not valid");
         
     }
-    
 }

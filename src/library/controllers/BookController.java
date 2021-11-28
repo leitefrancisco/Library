@@ -21,13 +21,7 @@ public class BookController extends BaseController<Book> {
        Book[] books = getFileHandler().readFile();
        
 
-       for(Book book : books) {
-          Availability a =  ModelsInMemory.getAvailabity(book.getId());
-          for(String readerId: a.getReadersId()){
-              book.getQueue().enqueue(ModelsInMemory.getReaderById(readerId));
-          }
-          
-       }
+       
        ModelsInMemory.setBooks(books);
        
        return getAll();
@@ -62,6 +56,8 @@ public class BookController extends BaseController<Book> {
     public Book getBookById(String bookId) {
         return ModelsInMemory.getBookById(bookId);
     }
+
+    
 
     
 }

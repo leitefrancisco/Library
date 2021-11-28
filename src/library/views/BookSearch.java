@@ -102,7 +102,7 @@ public class BookSearch extends javax.swing.JInternalFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1515, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1560, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -229,7 +229,7 @@ public class BookSearch extends javax.swing.JInternalFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1515, Short.MAX_VALUE)
+            .addGap(0, 1560, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,7 +267,7 @@ public class BookSearch extends javax.swing.JInternalFrame {
         try {
             showAllBooks();
             showGenres();
-            btnBookQueue.setEnabled(false);
+            btnBookQueue.setEnabled(true);
             btnBorrowBook.setEnabled(false);
         } catch (IOException ex) {
             Logger.getLogger(BookSearch.class.getName()).log(Level.SEVERE, null, ex);
@@ -350,11 +350,9 @@ public class BookSearch extends javax.swing.JInternalFrame {
     private void booksTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_booksTableMouseClicked
        
         if(new AvailabilityController().getById(getSelectedBook().getId()).getAmount() == 0){
-            btnBookQueue.setEnabled(true);
             btnBorrowBook.setEnabled(false);
         }
         else{
-            btnBookQueue.setEnabled(false);
             btnBorrowBook.setEnabled(true);
         }
     }//GEN-LAST:event_booksTableMouseClicked
@@ -422,17 +420,17 @@ public class BookSearch extends javax.swing.JInternalFrame {
       */   
     private void setTableModel(BooksTableModel model){      
         Sorter sorter = new Sorter();
-        model.setBooks(sorter.sortMoviesByTitle(model.getBooks()));
+        model.setBooks(sorter.sortBooksByTitle(model.getBooks()));
         booksTable.getTableHeader().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int col = booksTable.columnAtPoint(e.getPoint());
                 if(col==0){
-                    model.setBooks(sorter.sortMoviesByTitle(model.getBooks()));
+                    model.setBooks(sorter.sortBooksByTitle(model.getBooks()));
                     booksTable.repaint();
                 }
                 else if(col==1){
-                    model.setBooks(sorter.sortMoviesByAuthor(model.getBooks()));
+                    model.setBooks(sorter.sortBooksByAuthor(model.getBooks()));
                     booksTable.repaint();
                 }
             }

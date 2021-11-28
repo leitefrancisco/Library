@@ -8,16 +8,16 @@ package library.tableModels;
 import javax.swing.table.AbstractTableModel;
 import library.controllers.BookController;
 import library.controllers.ReaderController;
-import library.models.Book;
 import library.models.Borrow;
 import library.utils.DateFormatUtil;
 
+
 /**
- *
- * @author Xiquinho
+ * this is the table model for the Borrows and determines what information from the Borrows will be displayed in the table
+ * @author Francisco    
  */
 public class BorrowsTableModel extends AbstractTableModel{
-        //https://docs.oracle.com/javase/tutorial/uiswing/components/table.html#data
+    //https://docs.oracle.com/javase/tutorial/uiswing/components/table.html#data
     
     //method to get image, title, genre and director in the rent frame
     

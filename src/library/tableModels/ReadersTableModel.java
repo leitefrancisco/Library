@@ -9,8 +9,8 @@ import javax.swing.table.AbstractTableModel;
 import library.models.Reader;
 
 /**
- *
- * @author usr
+ * this is the table model for the Readers and determines what information from the Readers will be displayed in the table
+ * @author Francisco    
  */
 public class ReadersTableModel extends AbstractTableModel {
     private String[] columnNames = {"Reader Full Name   --A-Z-- ","Address","Active","Reader"};

@@ -8,13 +8,21 @@ package library.views;
 import library.tableModels.ReadersTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
+import library.controllers.AvailabilityController;
+import library.controllers.BookController;
 import library.controllers.ReaderController;
 import library.models.Book;
 import library.models.Reader;
+import library.utils.AlreadyInQueueException;
+import library.utils.AlreadyWithTheBookException;
+import library.utils.InvalidFileException;
 import library.utils.Sorter;
 
 /**
@@ -146,9 +154,30 @@ public class ReadersToAddInQueue extends javax.swing.JInternalFrame {
         if(getSelectedReader().getActive().equals("0")){
             JOptionPane.showMessageDialog(this, "This Reader is inactive, please go to Readers Search and Activate him/her");
         }
-         else{
-             //add reader to queue
-         }
+        else{
+            int n = JOptionPane.showConfirmDialog(this,"Add "+getSelectedReader().getFullName() + " to the queue?",
+                    "Confirm Enqueue",
+                    JOptionPane.YES_NO_OPTION);
+            if(n==0){
+                try {
+                    AvailabilityController ac = new AvailabilityController();
+                    ac.addReaderToQueue(book.getId(), getSelectedReader().getId());
+                    JOptionPane.showMessageDialog(this,getSelectedReader().getFullName() +" Was added in the Queue for the book "+ book.getTitle());
+                    this.mf.goHome();
+                } catch (IOException ex) {
+                    Logger.getLogger(ReadersToAddInQueue.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InvalidFileException ex) {
+                    Logger.getLogger(ReadersToAddInQueue.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (AlreadyInQueueException ex) {
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
+                    Logger.getLogger(ReadersToAddInQueue.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (AlreadyWithTheBookException ex) {
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
+                    Logger.getLogger(ReadersToAddInQueue.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+        }
     }//GEN-LAST:event_btnAddToQueueActionPerformed
     
     

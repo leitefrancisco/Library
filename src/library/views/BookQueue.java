@@ -5,14 +5,21 @@
 */
 package library.views;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import library.tableModels.ReadersTableModel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
+import library.controllers.AvailabilityController;
+import library.controllers.ReaderController;
+import library.models.Availability;
 import library.models.Book;
-import library.utils.Sorter;
+import library.models.Reader;
+import library.utils.InvalidFileException;
 
 /**
  * This view will receive a book as a parameter and will show the current queue for it
@@ -139,11 +146,26 @@ public class BookQueue extends javax.swing.JInternalFrame {
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         showBookQueue();
     }//GEN-LAST:event_formInternalFrameOpened
-
+    
     private void btnRemoveFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveFirstActionPerformed
-        // TODO add your handling code here:
+        try {
+            int n = JOptionPane.showConfirmDialog(this,"Remove First Reader From Queue?",
+                    "Confirm remove",
+                    JOptionPane.YES_NO_OPTION);
+            if(n==0){
+                AvailabilityController ac = new AvailabilityController();
+                ac.removeFirstReaderFromQueue(book.getId());
+                JOptionPane.showMessageDialog(this," First Reader was removed from Queue");
+            }
+            
+            
+        } catch (IOException | InvalidFileException ex) {
+            Logger.getLogger(BookQueue.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        showBookQueue();
+        this.repaint();
     }//GEN-LAST:event_btnRemoveFirstActionPerformed
-
+    
     private void btnAddToQueueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToQueueActionPerformed
         this.mf.showReadersToAddInQueue(book);
     }//GEN-LAST:event_btnAddToQueueActionPerformed
@@ -158,29 +180,10 @@ public class BookQueue extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
     
     /**
-     * will set the model for the table 
-     * @param model 
+     * will set the model for the table
+     * @param model
      */
     private void setTableModel(ReadersTableModel model){
-        Sorter sorter = new Sorter();
-        model.setReaders(sorter.sortReadersByName(model.getReaders()));
-        readersTable.getTableHeader().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                
-                int col = readersTable.columnAtPoint(e.getPoint());
-                
-                if(col==0){
-                    model.setReaders(sorter.sortReadersByName(model.getReaders()));
-                    readersTable.repaint();
-                }
-                
-                else if(col==1){
-                    model.setReaders(sorter.sortReadersByName(model.getReaders()));
-                    readersTable.repaint();
-                }
-            }
-        });
         readersTable.setModel(model);
         readersTable.setRowHeight(50);
         readersTable.getColumnModel().getColumn(0).setPreferredWidth(10);
@@ -196,15 +199,21 @@ public class BookQueue extends javax.swing.JInternalFrame {
      * to be used in the setTableModel Method
      */
     private void showBookQueue() {
+        ReaderController rc = new ReaderController();
+        AvailabilityController ac = new AvailabilityController();
+        Availability bookAvailability = ac.getById(book.getId());
+        ArrayList<Reader> readers = new ArrayList<>();
         
-//      Reader[] readers = ModelsInMemory.getQueueOfBook(book.getId());
+        if(bookAvailability.getWaitReadersId().length!=0){
+            for(String s: bookAvailability.getWaitReadersId()){
+                readers.add(rc.getReaderById(s));
+            }
+        }
         
-        
-//        ReadersTableModel model = new ReadersTableModel(readers);
-//        setTableModel(model);
-//        if(readers.length==0){
-//            JOptionPane.showMessageDialog(this, "The Queue is Empty");
-//        }
+        ReadersTableModel model = new ReadersTableModel(readers.toArray(new Reader[readers.size()]));
+        setTableModel(model);
+        if(readers.toArray(new Reader[readers.size()]).length==0){
+            JOptionPane.showMessageDialog(this, "The Queue is Empty");
+        }
     }
-    
 }

@@ -5,11 +5,10 @@
 */
 package library.utils;
 import library.models.Book;
-import library.models.Borrow;
 import library.models.Reader;
 /**
- *
- * @author f.meireles
+ * this class is responsible for the sorting in the program
+ * @author Francisco
  */
 
 public class Sorter {
@@ -18,8 +17,13 @@ public class Sorter {
     private boolean bookAuthorClicked = false;
     private boolean readerNameClicked = false;
     private boolean borrowIdClicked = false;
-    
-    public Book[] sortMoviesByTitle(Book[] books){
+    /**
+     * sort the Books by title and depending on a boolean, it determines if it will be ascending or descending order
+     * this is to allow the sorting happens by clicking only on the header of the table the items are shown
+     * @param books
+     * @return 
+     */
+    public Book[] sortBooksByTitle(Book[] books){
         
         for (int i = 1; i<books.length; i++){
             
@@ -49,8 +53,13 @@ public class Sorter {
         }
         return books;
     }
-    
-    public Book[] sortMoviesByAuthor(Book[] books){
+    /**
+     * sort the Books by Author and depending on a boolean, it determines if it will be ascending or descending order
+     * this is to allow the sorting happens by clicking only on the header of the table the items are shown
+     * @param books
+     * @return 
+     */
+    public Book[] sortBooksByAuthor(Book[] books){
         
         for (int i = 1; i<books.length; i++){
             
@@ -80,7 +89,12 @@ public class Sorter {
         }
         return books;
     }
-    
+    /**
+     * sort the Readers by their names and depending on a boolean, it determines if it will be ascending or descending order
+     * this is to allow the sorting happens by clicking only on the header of the table the items are shown
+     * @param readers
+     * @return 
+     */
     public Reader[] sortReadersByName(Reader[]readers){
         
         for (int i = 1; i<readers.length; i++){
@@ -113,13 +127,13 @@ public class Sorter {
     }
     
 //    public Reader[] sortReadersById(Reader[]readers){
-//        
+//
 //        for (int i = 1; i<readers.length; i++){
-//            
+//
 //            Reader key = readers[i];
 //            int pos = i;
 //            int intId = Integer.parseInt(readers[i].getId());
-//            
+//
 //            if (readerNameClicked){
 //                while(pos > 0 && intId > 0){
 //               // while(pos > 0 && readers[pos-1].getId().compareToIgnoreCase(key.getId()) < 0){
@@ -133,7 +147,7 @@ public class Sorter {
 //                //while(pos > 0 && readers[pos-1].getId().compareToIgnoreCase(key.getId()) > 0){
 //                    readers[pos]=readers[pos-1];
 //                    pos --;
-//                    
+//
 //                }
 //                readers[pos]=key;
 //            }
@@ -146,15 +160,15 @@ public class Sorter {
 //        }
 //        return readers;
 //    }
-
+    
 //    public Borrow[] sortBorrowsById(Borrow[] borrows) {
-//        
+//
 //        for (int i = 1; i<borrows.length; i++){
-//            
+//
 //            Borrow key = borrows[i];
 //            int pos = i;
 //            int intId = Integer.parseInt(borrows[i].getId());
-//            
+//
 //            if (borrowIdClicked){
 //                 while(pos > 0 && intId > 0){
 //                //while(pos > 0 && borrows[pos-1].getId().compareToIgnoreCase(key.getId()) < 0){
@@ -168,7 +182,7 @@ public class Sorter {
 //                //while(pos > 0 && borrows[pos-1].getId().compareToIgnoreCase(key.getId()) > 0){
 //                    borrows[pos]=borrows[pos-1];
 //                    pos --;
-//                    
+//
 //                }
 //                borrows[pos]=key;
 //            }
