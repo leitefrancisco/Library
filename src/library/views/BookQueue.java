@@ -167,7 +167,14 @@ public class BookQueue extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnRemoveFirstActionPerformed
     
     private void btnAddToQueueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToQueueActionPerformed
-        this.mf.showReadersToAddInQueue(book);
+        AvailabilityController ac = new AvailabilityController();
+        Availability bookAvailability = ac.getById(book.getId());
+        if(bookAvailability.getQueue().size()<=10){
+            this.mf.showReadersToAddInQueue(book);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Sorry the Maximum capacity for a Book Queue is 10");
+        }
     }//GEN-LAST:event_btnAddToQueueActionPerformed
     
     

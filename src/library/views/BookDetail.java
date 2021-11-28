@@ -15,8 +15,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
+import library.controllers.AvailabilityController;
 import library.controllers.BorrowController;
 import library.controllers.ReaderController;
+import library.models.Availability;
 import library.utils.Sorter;
 import library.models.Book;
 import library.models.Reader;
@@ -268,36 +270,62 @@ public class BookDetail extends javax.swing.JInternalFrame {
      * @param evt 
      */
     private void btnConfirmReaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmReaderActionPerformed
-        if(getSelectedReader().getActive().equals("0")){
-            JOptionPane.showMessageDialog(this, "This Reader is inactive, please go to Readers Search and Activate him/her");
-        }
-        else{
-            if(readersTable.getSelectedRow()==-1){
-                JOptionPane.showMessageDialog(this, "no reader selected");
-                
+        try{
+            AvailabilityController ac = new AvailabilityController();
+            Availability availability =  ac.getById(book.getId());
+            BorrowController bc = new BorrowController();
+            String readerId = getSelectedReader().getId();
+            if(getSelectedReader().getActive().equals("0")){
+                JOptionPane.showMessageDialog(this, "This Reader is inactive, please go to Readers Search and Activate him/her");
             }
             else{
-                int n = JOptionPane.showConfirmDialog(this,"Confirm Borrow \n\nBOOK: \n"+
-                        book.getTitle()+" \nTO:\n "+
-                        getSelectedReader().getFullName(),
-                        "Confirm Borrow",
-                        JOptionPane.YES_NO_OPTION);
-                if(n==0){
-                    BorrowController bc = new BorrowController();
-                    String readerId = getSelectedReader().getId();
-                    
-                    try {
-                        bc.addNewBorrow(readerId, book.getId());
-                        JOptionPane.showMessageDialog(this, "Borrow registered");
-                        this.mf.refreshMemory();
-                        this.mf.goHome();
-                    } catch (IOException ex) {
-                        Logger.getLogger(BookDetail.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (InvalidFileException ex) {
-                        Logger.getLogger(BookDetail.class.getName()).log(Level.SEVERE, null, ex);
+                if(readersTable.getSelectedRow()==-1){
+                    JOptionPane.showMessageDialog(this, "no reader selected");
+                }
+                else{
+                    int n = JOptionPane.showConfirmDialog(this,"Confirm Borrow \n\nBOOK: \n"+
+                            book.getTitle()+" \nTO:\n "+
+                            getSelectedReader().getFullName(),
+                            "Confirm Borrow",
+                            JOptionPane.YES_NO_OPTION);
+                    if(n==0){
+                        if(!availability.getQueue().isEmpty() && !availability.getQueue().peekFirst().getId().equals(getSelectedReader().getId())){
+                            
+                            int j = JOptionPane.showConfirmDialog(this,"The First Reader in the queue is:\n "+availability.getQueue().peekFirst().getFullName() +
+                                    "Borrow book to:\n "+getSelectedReader().getFullName() +" \nAnyway?",
+                                    "Confirm Borrow",
+                                    JOptionPane.YES_NO_OPTION);
+                            if(j==0){
+                                bc.addNewBorrow(readerId, book.getId());
+                                JOptionPane.showMessageDialog(this, "Borrow registered");
+                                this.mf.refreshMemory();
+                                this.mf.goHome();
+                            }
+                        }
+                        else if(!availability.getQueue().isEmpty() && availability.getQueue().peekFirst().getId().equals(getSelectedReader().getId())){
+                            JOptionPane.showMessageDialog(this,"The First Reader in the queue was:\n "+getSelectedReader().getFullName() +
+                                    "\n and the reader was removed from the queue");
+                            
+                            bc.addNewBorrow(readerId, book.getId());
+                            JOptionPane.showMessageDialog(this, "Borrow registered");
+                            ac.removeFirstReaderFromQueue(book.getId());
+                            this.mf.refreshMemory();
+                            this.mf.goHome();
+                        }
+                        else{
+                            bc.addNewBorrow(readerId, book.getId());
+                            JOptionPane.showMessageDialog(this, "Borrow registered");
+                            this.mf.refreshMemory();
+                            this.mf.goHome();   
+                        }
                     }
                 }
             }
+        }
+        catch (IOException ex) {
+            Logger.getLogger(BookDetail.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidFileException ex) {
+            Logger.getLogger(BookDetail.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnConfirmReaderActionPerformed
     

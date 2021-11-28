@@ -5,6 +5,8 @@
 */
 package library.views;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import library.tableModels.BorrowsTableModel;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -13,9 +15,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
+import library.controllers.AvailabilityController;
+import library.controllers.BookController;
 import library.controllers.BorrowController;
+import library.controllers.ReaderController;
+import library.models.Book;
 import library.models.Borrow;
+import library.models.Reader;
 import library.utils.InvalidFileException;
+import library.utils.Sorter;
 
 /**
  * This view is responsible to show all the borrows that are in the memory 
@@ -54,6 +62,7 @@ public class Borrows extends javax.swing.JInternalFrame {
         btnSearchReader = new javax.swing.JButton();
         btnReaderAndBookSearch = new javax.swing.JButton();
         btnClearFilters = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
@@ -137,6 +146,8 @@ public class Borrows extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setText("You can sort By Borrow Date");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -163,6 +174,10 @@ public class Borrows extends javax.swing.JInternalFrame {
                 .addGap(137, 137, 137)
                 .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(400, 400, 400))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,8 +202,10 @@ public class Borrows extends javax.swing.JInternalFrame {
                                 .addComponent(btnClearFilters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnReaderAndBookSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
                                 .addComponent(btnReturnAll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(83, 83, 83))
         );
 
@@ -231,9 +248,7 @@ public class Borrows extends javax.swing.JInternalFrame {
         int row = borrowsTable.getSelectedRow();
         Borrow borrow = (Borrow) borrowsTable.getModel().getValueAt(row, 4);
         returnBook(borrow);
-//        if(book has queue show queue){
-//            
-//        }
+        
         
     }//GEN-LAST:event_btnReturnActionPerformed
 
@@ -266,6 +281,7 @@ public class Borrows extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnReturnAll;
     private javax.swing.JButton btnSearchBook;
     private javax.swing.JButton btnSearchReader;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
@@ -278,22 +294,20 @@ public class Borrows extends javax.swing.JInternalFrame {
      * @param model 
      */
     private void setTableModel(BorrowsTableModel model){
-//        Sorter sorter = new Sorter();
-//        model.setBorrows(sorter.sortBorrowsById(model.getBorrows()));
-//        borrowsTable.getTableHeader().addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                
-//                int col = borrowsTable.columnAtPoint(e.getPoint());
-//                
-//                
-//                if(col==0){
-//                    model.setBorrows(sorter.sortBorrowsById(model.getBorrows()));
-//                    borrowsTable.repaint();
-//                }
-//
-//            }
-//        });
+        
+        Sorter sorter = new Sorter();
+        model.setBorrows(sorter.sortBorrowsByBorrowDate(model.getBorrows()));
+        borrowsTable.getTableHeader().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int col = borrowsTable.columnAtPoint(e.getPoint());
+                if(col==2){
+                    model.setBorrows(sorter.sortBorrowsByBorrowDate(model.getBorrows()));
+                    borrowsTable.repaint();
+                }
+            }
+        });
+        
         borrowsTable.setModel(model);
         borrowsTable.setRowHeight(50);
         borrowsTable.getColumnModel().getColumn(0).setPreferredWidth(10);
@@ -308,7 +322,10 @@ public class Borrows extends javax.swing.JInternalFrame {
      * get all borrows in the system to display in the table
      */
     private void showAllBorrows(){
-        BorrowsTableModel model = new BorrowsTableModel(bc.getAll());
+        
+        Borrow[] borrows = bc.getAll();
+        
+        BorrowsTableModel model = new BorrowsTableModel(borrows);
         setTableModel(model);
     }
     /**
@@ -323,27 +340,31 @@ public class Borrows extends javax.swing.JInternalFrame {
      * @param borrow 
      */
     private void returnBook(Borrow borrow)  {
+        AvailabilityController ac = new AvailabilityController();
+        ReaderController rc = new ReaderController();
+        Reader borrowReader = rc.getReaderById(borrow.getReaderId());
+        Book book = new BookController().getBookById(borrow.getBookId());
         int n = JOptionPane.showConfirmDialog(this,"Confirm Return? \n\nBOOK: \n"+
-                borrow.getBookId()+" \nFrom:\n "+
-                borrow.getReaderId(),
+                book.getTitle()+" \nFrom:\n "+
+                borrowReader.getFullName(),
                 "Confirm Return",
                 JOptionPane.YES_NO_OPTION);
         if(n==0){
-            
-            
-           
             try {
+                
                 bc.returnBook(borrow.getId());
-//                if(book has queue display){
-//                    
-//                }
+                
+                if(!ac.getById(borrow.getBookId()).getQueue().isEmpty()){
+                    Reader nextInQueue = ac.getById(book.getId()).getQueue().peekFirst();
+                    JOptionPane.showMessageDialog(this, "BOOK RETURNED! \n The Next Reader in the Queue for the book :\n" + book.getTitle() + "\n is : \n" + nextInQueue.getFullName() );
+                }
                 this.repaint();
             } catch (IOException ex) {
                 Logger.getLogger(Borrows.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InvalidFileException ex) {
                 Logger.getLogger(Borrows.class.getName()).log(Level.SEVERE, null, ex);
             }
-             
+            
         }
     }
     /**
@@ -354,8 +375,13 @@ public class Borrows extends javax.swing.JInternalFrame {
         if(borrows.length==0){
             JOptionPane.showMessageDialog(this, "Error : No Borrows Found");
         }
-        else{BorrowsTableModel model = new BorrowsTableModel(borrows);
-        setTableModel(model);
+        else{
+            
+            
+            
+            
+            BorrowsTableModel model = new BorrowsTableModel(borrows);
+            setTableModel(model);
         }
     }
     /**
@@ -366,8 +392,11 @@ public class Borrows extends javax.swing.JInternalFrame {
         if(borrows.length==0){
             JOptionPane.showMessageDialog(this, "Error : No Borrows Found");
         }
-        else{BorrowsTableModel model = new BorrowsTableModel(borrows);
-        setTableModel(model);
+        else{
+            
+            
+            BorrowsTableModel model = new BorrowsTableModel(borrows);
+            setTableModel(model);
         }
     }
     /**
@@ -378,8 +407,11 @@ public class Borrows extends javax.swing.JInternalFrame {
         if(borrows.length==0){
             JOptionPane.showMessageDialog(this, "Error : No Borrows Found");
         }
-        else{BorrowsTableModel model = new BorrowsTableModel(borrows);
-        setTableModel(model);
+        else{
+            
+            
+            BorrowsTableModel model = new BorrowsTableModel(borrows);
+            setTableModel(model);
         }
     }
     

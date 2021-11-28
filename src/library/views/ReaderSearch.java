@@ -48,12 +48,9 @@ public class ReaderSearch extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField2 = new javax.swing.JTextField();
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         btnSearchName = new javax.swing.JButton();
-        btnSearchId = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         readersTable = new javax.swing.JTable();
         btnReaderBorrows = new javax.swing.JButton();
@@ -88,11 +85,7 @@ public class ReaderSearch extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Search Name:");
 
-        jLabel2.setText("Search ID:");
-
         btnSearchName.setText("Serach By Name");
-
-        btnSearchId.setText("Search By ID");
 
         readersTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -153,17 +146,11 @@ public class ReaderSearch extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
+                .addComponent(jLabel1)
                 .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
-                    .addComponent(jTextField2))
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSearchName)
-                    .addComponent(btnSearchId, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnSearchName)
                 .addGap(169, 169, 169)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnReaderBorrows, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -195,16 +182,12 @@ public class ReaderSearch extends javax.swing.JInternalFrame {
                                 .addComponent(btnReaderBorrows)
                                 .addComponent(btnShowAllReaders)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnSearchId)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnEditReader)
-                                .addComponent(btnToggleActive))
-                            .addComponent(jLabel2)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnEditReader)
+                            .addComponent(btnToggleActive)))
                     .addComponent(btnDeactivateReader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 13, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 15, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE)
                 .addGap(44, 44, 44))
         );
 
@@ -314,15 +297,12 @@ public class ReaderSearch extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnDeactivateReader;
     private javax.swing.JButton btnEditReader;
     private javax.swing.JButton btnReaderBorrows;
-    private javax.swing.JButton btnSearchId;
     private javax.swing.JButton btnSearchName;
     private javax.swing.JButton btnShowAllReaders;
     private javax.swing.JButton btnToggleActive;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTable readersTable;
     // End of variables declaration//GEN-END:variables
     /**

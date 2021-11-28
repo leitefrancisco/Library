@@ -5,6 +5,7 @@
 */
 package library.utils;
 import library.models.Book;
+import library.models.Borrow;
 import library.models.Reader;
 /**
  * this class is responsible for the sorting in the program
@@ -16,7 +17,7 @@ public class Sorter {
     private boolean bookTitleClicked = false;
     private boolean bookAuthorClicked = false;
     private boolean readerNameClicked = false;
-    private boolean borrowIdClicked = false;
+    private boolean borrowBorrowDateClicked = false;
     /**
      * sort the Books by title and depending on a boolean, it determines if it will be ascending or descending order
      * this is to allow the sorting happens by clicking only on the header of the table the items are shown
@@ -125,7 +126,43 @@ public class Sorter {
         }
         return readers;
     }
-    
+    /**
+     * sort the borrows by their borrow dates
+     * @param borrows
+     * @return 
+     */
+    public Borrow[] sortBorrowsByBorrowDate(Borrow[] borrows){
+        for (int i = 1; i<borrows.length; i++){
+
+            Borrow key = borrows[i];
+            int pos = i;
+
+            if (borrowBorrowDateClicked){
+                 while(pos > 0 && borrows[pos-1].getBorrowDate().compareTo(key.getBorrowDate())>0){
+                    borrows[pos]=borrows[pos-1];
+                    pos --;
+                }
+                borrows[pos]=key;
+            }
+            else{
+                 while(pos > 0 && borrows[pos-1].getBorrowDate().compareTo(key.getBorrowDate())<0){
+                    borrows[pos]=borrows[pos-1];
+                    pos --;
+
+                }
+                borrows[pos]=key;
+            }
+        }
+        if(!borrowBorrowDateClicked){
+            this.borrowBorrowDateClicked = true;
+        }
+        else{
+            this.borrowBorrowDateClicked = false;
+        }
+        
+        return borrows;
+    }
+
 //    public Reader[] sortReadersById(Reader[]readers){
 //
 //        for (int i = 1; i<readers.length; i++){
@@ -195,5 +232,7 @@ public class Sorter {
 //        }
 //        return borrows;
 //    }
+
+    
     
 }

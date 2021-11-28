@@ -47,6 +47,13 @@ public class DateFormatUtil {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         return dateFormat.format(date);
     }
+    
+    public static String asStringForTableModel(Date date) {
+        if(date==null)return "";
+        DateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY");
+        return dateFormat.format(date);
+    }
+    
     /**
      * returns the current date
      * @return 

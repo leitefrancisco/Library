@@ -21,7 +21,7 @@ public class BorrowsTableModel extends AbstractTableModel{
     
     //method to get image, title, genre and director in the rent frame
     
-    private String[] columnNames = {"Book","Reader Name","Borrow Date","Returned date","Borrow"};
+    private String[] columnNames = {"Book","Reader Name","Borrow Date -   Asc / Desc   -","Returned date","Borrow"};
     private Borrow[] borrows;
     
 
@@ -36,7 +36,6 @@ public class BorrowsTableModel extends AbstractTableModel{
     public void setBorrows(Borrow[] borrows) {
         this.borrows = borrows;
     }
-    
     
     public String getColumnName(int col) {
         return columnNames[col];
@@ -68,14 +67,14 @@ public class BorrowsTableModel extends AbstractTableModel{
                 return new ReaderController().getReaderById(borrow.getReaderId()).getFullName();
             }
             case 2:{
-                return DateFormatUtil.asString(borrow.getBorrowDate());
+                return DateFormatUtil.asStringForTableModel(borrow.getBorrowDate());
             }
             case 3:{
                if(borrow.getReturnDate()==null){
                     return "Not Returned";
                 }
                 else{
-                    return DateFormatUtil.asString(borrow.getReturnDate());
+                    return DateFormatUtil.asStringForTableModel(borrow.getReturnDate());
                 }
             }
             case 4:{

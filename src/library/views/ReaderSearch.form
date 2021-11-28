@@ -24,20 +24,11 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jTextField1" pref="116" max="32767" attributes="0"/>
-                  <Component id="jTextField2" max="32767" attributes="0"/>
-              </Group>
+              <Component id="jTextField1" min="-2" pref="116" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btnSearchName" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnSearchId" alignment="0" min="-2" pref="111" max="-2" attributes="0"/>
-              </Group>
+              <Component id="btnSearchName" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="169" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="btnReaderBorrows" min="-2" pref="230" max="-2" attributes="0"/>
@@ -77,28 +68,21 @@
                           </Group>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="btnSearchId" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnEditReader" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnToggleActive" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnEditReader" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnToggleActive" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="btnDeactivateReader" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" pref="13" max="32767" attributes="0"/>
-              <Component id="jScrollPane1" pref="543" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" pref="15" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="545" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JTextField" name="jTextField2">
-    </Component>
     <Component class="javax.swing.JTextField" name="jTextField1">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
@@ -109,19 +93,9 @@
         <Property name="text" type="java.lang.String" value="Search Name:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Search ID:"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JButton" name="btnSearchName">
       <Properties>
         <Property name="text" type="java.lang.String" value="Serach By Name"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnSearchId">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Search By ID"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
