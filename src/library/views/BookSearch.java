@@ -325,7 +325,11 @@ public class BookSearch extends javax.swing.JInternalFrame {
     private void comboBoxGenreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxGenreActionPerformed
         String selectedGenre = (String) comboBoxGenre.getSelectedItem();
         if(selectedGenre.equals("Select Genre")){
-            
+            try {
+                showAllBooks();
+            } catch (IOException ex) {
+                Logger.getLogger(BookSearch.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }else{
             txtFieldTitleSearch.setText("");
             txtFieldAuthorSearch.setText("");

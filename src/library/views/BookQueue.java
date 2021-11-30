@@ -221,6 +221,7 @@ public class BookQueue extends javax.swing.JInternalFrame {
         setTableModel(model);
         if(readers.toArray(new Reader[readers.size()]).length==0){
             JOptionPane.showMessageDialog(this, "The Queue is Empty");
+            btnRemoveFirst.setEnabled(false);
         }
     }
 }

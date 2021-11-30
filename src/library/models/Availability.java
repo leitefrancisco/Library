@@ -16,14 +16,14 @@ import library.utils.Queue;
  */
 public class Availability extends BaseModel{
    
-    private int amtAvailable;
+    private int available;//1 = available ; 2 = unavailable
     private String[] waitReadersId;
     private Queue<Reader> queue;    
     //Book_Id,Amount_Available,queue
 
     public Availability(String bookId, String amt, String queue) {
         super(bookId);
-        this.amtAvailable = Integer.parseInt(amt);
+        this.available = Integer.parseInt(amt);
         if(queue == null || queue.equals("")){
             this.waitReadersId = new String[0];
         }else{ // "".split(";") [""]
@@ -37,14 +37,14 @@ public class Availability extends BaseModel{
     }
     
     public void setAmtAvailable(int amtAvailable) {
-        this.amtAvailable = amtAvailable;
+        this.available = amtAvailable;
     }
 
     public String getCsvLine() {
         if(this.queue.isEmpty()){
-             return getId() +","+amtAvailable+","; 
+             return getId() +","+available+","; 
         }
-        return getId() +","+amtAvailable+","+this.queue.toString(); 
+        return getId() +","+available+","+this.queue.toString(); 
     } 
   
     public String[] getWaitReadersId() {
@@ -53,7 +53,7 @@ public class Availability extends BaseModel{
     }
 
     public int getAmount() {
-        return amtAvailable;
+        return available;
     }
     
     

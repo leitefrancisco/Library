@@ -18,7 +18,7 @@ public class BooksTableModel extends AbstractTableModel {
     
     //method to get image, title, genre and director in the rent frame
     
-    private String[] columnNames = {"Title --A-Z-- ","Author --A-Z-- ","Genre","Amount Available","id","movie"};
+    private String[] columnNames = {"Title --A-Z-- ","Author --A-Z-- ","Genre","Available","id","movie"};
     private Book[ ] books;
     
 
@@ -71,7 +71,14 @@ public class BooksTableModel extends AbstractTableModel {
                 return toReturn;
             }
             case 3:{
-                return new AvailabilityController().getById(book.getId()).getAmount();
+                if(new AvailabilityController().getById(book.getId()).getAmount()==1){
+                    return "Yes";
+                }
+                else{
+                    return "No";
+                }
+                
+// new AvailabilityController().getById(book.getId()).getAmount();
             }
             case 4:{
                 return book.getId();
