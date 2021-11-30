@@ -5,10 +5,7 @@
  */
 package library.models;
 
-import java.util.ArrayList;
 import library.utils.Queue;
-
- 
 
 /**
  *This class is the model for the availability of the book, it will store if the book is currently available and whether it has a queue or not
@@ -16,7 +13,7 @@ import library.utils.Queue;
  */
 public class Availability extends BaseModel{
    
-    private int available;//1 = available ; 2 = unavailable
+    private int available;//1 = available ; 0 = unavailable
     private String[] waitReadersId;
     private Queue<Reader> queue;    
     //Book_Id,Amount_Available,queue

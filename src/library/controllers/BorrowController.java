@@ -7,50 +7,72 @@ package library.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import library.io.BaseFileHandler;
 import library.io.BorrowFileHandler;
 import library.models.Book;
 import library.models.Borrow;
+import library.models.Reader;
 import library.utils.DateFormatUtil;
 import library.utils.InvalidFileException;
 
 /**
- *
- * @author Xiquinho
+ *This class is the controller for the Borrow model , it will take the requests from the view to get
+ * the objects in the model and will call the file handler to save the objects in the cache memory (Models In Memory)
+ * @author Francisco
  */
 public class BorrowController extends BaseController<Borrow>{
-    
+    /**
+     * calls the file handler and reads the CSV, saves all the borrows in the Cache Memory (Models In Memory)
+     * @return
+     * @throws InvalidFileException
+     * @throws IOException
+     */
     @Override
     public Borrow[] loadFile() throws InvalidFileException, IOException {
         Borrow[] b = getFileHandler().readFile();
         ModelsInMemory.setBorrows(b);
         return getAll();
     }
-    
+    /**
+     * gets all the borrows in the cache memory
+     * @return 
+     */
     @Override
     public Borrow[] getAll() {
         return ModelsInMemory.getBorrows();
     }
-    
+    /**
+     * returns the file handler responsible for the borrows
+     * @return 
+     */
     @Override
     protected BaseFileHandler<Borrow> getFileHandler() {
         return new BorrowFileHandler();
     }
-    
+    /**
+     * gets only the borrows that were not returned yet
+     * @return 
+     */
     public Borrow[] getBorrowsToReturn() {
         return ModelsInMemory.getBorrowsToReturn();
     }
-    
+    /**
+     * get a borrow by the book id (not used but might be used in the future)
+     * @param bookId
+     * @return 
+     */
     private Borrow[] getBorrowsByBookId(String bookId){
         return ModelsInMemory.getBorrowsByBookId(bookId);
     }
-    
-    public Borrow[] getBorrowsByBookTitle(String text) {
+    /**
+     * returns the borrows that contains a specific title 
+     * @param title
+     * @return 
+     */
+    public Borrow[] getBorrowsByBookTitle(String title) {
         ArrayList<Borrow> borrowsToReturn = new ArrayList<>();
-        Book [] books = new BookController().getBooksByTitle(text);
+        Book [] books = new BookController().getBooksByTitle(title);
         Borrow[] borrows = this.getAll();
-        
         
         for(Book book : books){
             for(Borrow borrow : borrows){
@@ -59,43 +81,86 @@ public class BorrowController extends BaseController<Borrow>{
             }
         }
         
-        
         return borrowsToReturn.toArray(new Borrow[borrowsToReturn.size()]);
     }
-    
-    public Borrow[] getBorrowsByReaderName(String text) {
-        ArrayList<Borrow> borrowsToReturn = new ArrayList<>();
-        return borrowsToReturn.toArray(new Borrow[borrowsToReturn.size()]);
-    }
-    
-    public Borrow[] getBorrowsByBookAndReader(String text, String text0) {
-        ArrayList<Borrow> borrowsToReturn = new ArrayList<>();
-        Book [] books = new BookController().getBooksByTitle(text);
-        return borrowsToReturn.toArray(new Borrow[borrowsToReturn.size()]);
-    }
-    
-    /*
-    Borrow borrow = new Borrow("",readerId, book.getId(), null, null);
-    try {
-    bc.addNewBorrow(borrow);
+   /**
+    * returns the borrows  that contains the reader name searched
+    * @param readerName
+    * @return 
     */
-    
+    public Borrow[] getBorrowsByReaderName(String readerName) {
+        ArrayList<Borrow> borrowsToReturn = new ArrayList<>();
+        Reader[] readers = new ReaderController().getReadersByName(readerName);
+        Borrow[] borrows = this.getAll();
+        
+        for(Reader reader: readers){
+            for(Borrow borrow : borrows){
+                if(borrow.getReaderId().equals(reader.getId()))
+                    borrowsToReturn.add(borrow);
+            }
+        }
+        return borrowsToReturn.toArray(new Borrow[borrowsToReturn.size()]);
+    }
+    /**
+     * gets the borrows that contains both the reader name and the book title searched
+     * @param bookTitle
+     * @param readerName
+     * @return 
+     */
+    public Borrow[] getBorrowsByBookAndReader(String bookTitle, String readerName) {
+        ArrayList<Borrow> borrowsToReturn = new ArrayList<>();
+        Reader[] readers = new ReaderController().getReadersByName(readerName);
+        Borrow[] borrows = this.getAll();
+        Book [] books = new BookController().getBooksByTitle(bookTitle);
+        
+        
+        for(Borrow borrow: borrows){
+            for(Book book : books){
+                if(borrow.getBookId().equals(book.getId())){
+                    for(Reader reader : readers){
+                        if(borrow.getReaderId().equals(reader.getId())){
+                            borrowsToReturn.add(borrow);
+                        }
+                    }
+                }    
+            }
+        }
+        return borrowsToReturn.toArray(new Borrow[borrowsToReturn.size()]);
+    }
+    /**
+     * calls the file handle to create a new borrow and make the book unavailable
+     * and refreshes the memory
+     * @param readerId
+     * @param bookId
+     * @throws IOException
+     * @throws InvalidFileException 
+     */
     public void addNewBorrow(String readerId, String bookId) throws IOException, InvalidFileException {
         Borrow borrow = new Borrow(java.util.UUID.randomUUID().toString(),readerId, bookId, DateFormatUtil.today(), null);
         add(borrow);
         new AvailabilityController().decrease(bookId);
         loadFile();
     }
-    
+    /**
+     * calls the file handler edit the line to return the book
+     * updates the availability of the book 
+     * refreshes the memory
+     * @param borrowId
+     * @throws IOException
+     * @throws InvalidFileException 
+     */
     public void returnBook(String borrowId) throws IOException, InvalidFileException {
         Borrow b = ModelsInMemory.getBorrowById(borrowId);
         b.setReturnDate(DateFormatUtil.today());
         getFileHandler().editLine(b);
         new AvailabilityController().increase(b.getBookId());
         loadFile();
-        
     }
-    
+    /**
+     * return the borrows for a specific reader
+     * @param readerId
+     * @return 
+     */
     public Borrow[] getBorrowsByReaderId(String readerId) {
         ArrayList<Borrow> borrowsToReturn = new ArrayList<>();
         Borrow[] borrows = this.getAll();
@@ -104,11 +169,14 @@ public class BorrowController extends BaseController<Borrow>{
             if(borrow.getReaderId().equals(readerId))
                 borrowsToReturn.add(borrow);
         }
-        
-        
         return borrowsToReturn.toArray(new Borrow[borrowsToReturn.size()]);
     }
-
+    /**
+     * returns whether the reader already have the book so it won't be able to be added in the queue for the same book
+     * @param bookId
+     * @param readerId
+     * @return 
+     */
     boolean readerAlreadyWithBook(String bookId, String readerId) {
         for(Borrow b : getAll()){
             if(b.getBookId().equals(bookId)&&b.getReaderId().equals(readerId)&&b.getReturnDate()==null)
@@ -116,60 +184,7 @@ public class BorrowController extends BaseController<Borrow>{
         }
         return false;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
-//    public BorrowController() {
-//
-//    }
-//
-//    public Borrow [] getBorrows(Book[] books, Reader[] readers) throws ParseException, UnsupportedEncodingException, IOException{
-//        FileHandler fh = new FileHandler();
-//        return fh.csvBorrowReader(books,readers);
-//    }
-//
-//    public boolean writeBorrow(String readerId, Book book) throws IOException, ParseException{
-//
-//
-//
-//        FileHandler fh = new FileHandler();
-//
-//        Borrow b = new Borrow(
-//                "",
-//                ModelsInMemory.getReaderById(readerId),
-//                book, DateFormatUtil.today(),
-//                null);
-//        if(ModelsInMemory.getBorrows().length==0){
-//            b.setId("1");
-//        }
-//        else{
-//            int id = ModelsInMemory.getBorrows().length+1;
-//            b.setId(String.valueOf(id));
-//        }
-//        fh.addBorrow(b);
-//
-//        return false;
-//    }
-//
-//
-//
-//    public void editBorrow(Borrow borrow) throws IOException, ParseException {
-//        FileHandler fh = new FileHandler();
-//
-//        borrow.setReturnDate(DateFormatUtil.today());
-//        // decrease availability
-//        // get avaialablility of borrow.getBookId()
-//        // fhav.editAvailability(avaialablility)
-//
-//        fh.editBorrow(borrow);
-//
-//    }
+
 
 

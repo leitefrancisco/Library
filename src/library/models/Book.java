@@ -56,13 +56,7 @@ public class Book extends BaseModel{
     public String[] getGenres() {
         return genres;
     }
-    
-    
-//    public int getAmoutAvailable() {
-//        // this.availability.getAmount()
-//        return this.amountAvailable;
-//    }
-    
+   
     public String getAuthorFullName() {
         return authorFullName;
     }
@@ -81,10 +75,6 @@ public class Book extends BaseModel{
         
     } 
 
-//    public void setAmount(int amtFile) {
-//        this.amountAvailable = amtFile;
-//    }
-//    
     
     public static Book findBook(String bookId, Book[] books) {
         for (int i = 0; i < books.length; i++) {
@@ -94,7 +84,6 @@ public class Book extends BaseModel{
         }
         return null;
     }
-
     
     public String getCsvLine() {
         return getId()+","+authorFirstName+","+authorLastName+","+"\""+title+"\","+String.join("|", genres);

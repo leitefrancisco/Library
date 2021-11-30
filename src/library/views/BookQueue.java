@@ -169,7 +169,10 @@ public class BookQueue extends javax.swing.JInternalFrame {
     private void btnAddToQueueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToQueueActionPerformed
         AvailabilityController ac = new AvailabilityController();
         Availability bookAvailability = ac.getById(book.getId());
-        if(bookAvailability.getQueue().size()<=10){
+        if(bookAvailability.getAmount()==1){
+            JOptionPane.showMessageDialog(this, "This book is available, you can only add readers to queues when the book is not available");
+        }
+        else if(bookAvailability.getQueue().size()<=10){
             this.mf.showReadersToAddInQueue(book);
         }
         else{

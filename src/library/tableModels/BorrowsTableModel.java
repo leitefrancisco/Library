@@ -19,8 +19,6 @@ import library.utils.DateFormatUtil;
 public class BorrowsTableModel extends AbstractTableModel{
     //https://docs.oracle.com/javase/tutorial/uiswing/components/table.html#data
     
-    //method to get image, title, genre and director in the rent frame
-    
     private String[] columnNames = {"Book","Reader Name","Borrow Date -   Asc / Desc   -","Returned date","Borrow"};
     private Borrow[] borrows;
     

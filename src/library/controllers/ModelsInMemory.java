@@ -26,6 +26,21 @@ class ModelsInMemory {
     private static Availability[] availabilities;
     
     
+    static Reader[] getReaders() {
+        return readers;
+    }
+    
+    static Book[] getBooks() {
+        return books;
+    }
+    static String[] getGenres(){
+        return genres;
+    }
+    
+    static Borrow[] getBorrows(){
+        return borrows;
+    }
+    
     static void setBooks(Book[] b) {
         books = b;
         populateBookGenres();
@@ -43,6 +58,16 @@ class ModelsInMemory {
         availabilities = a;
     }
     
+    static Availability[] getAvailabilities() {
+        return availabilities;
+    }
+    
+    /**
+     * availabilities has the same Id as their books so it is easy to find them having the book
+     * this method will return the 
+     * @param bookId
+     * @return 
+     */
     static Availability getAvailabity(String bookId) {
         for(Availability a : availabilities){
             if(a.getId().equals(bookId)){
@@ -52,31 +77,37 @@ class ModelsInMemory {
         return null;
     }
     
-    static Availability[] getAvailabilities() {
-        return availabilities;
-    }
-    
-    
+    /**
+     * returns a reader by its Id 
+     * @param id
+     * @return 
+     */
     static Reader getReaderById(String id){
         if(id==null) return null;
         
-        for(int i = 0; i<readers.length;i++){
-            if (readers[i].getId().equals(id)){
-                return readers[i];
+        for (Reader reader : readers) {
+            if (reader.getId().equals(id)) {
+                return reader;
             }
         }
         return null;
     }
+    /**
+     * returns one book by its ID
+    */
     static Book getBookById(String bookId) {
         
-        for(int i = 0; i<books.length;i++){
-            if (books[i].getId().equals(bookId)){
-                return books[i];
+        for (Book book : books) {
+            if (book.getId().equals(bookId)) {
+                return book;
             }
         }
         return null;
     }
-    
+    /**
+     *this method reads the genres from the books, saves it in a HashSet so there will be no duplicates
+     * will save them to be used in the book search view so it is possible to nicely filter the books by their genres
+     */
     static void populateBookGenres(){
         
         HashSet<String> genresSet = new HashSet<>();
@@ -89,11 +120,8 @@ class ModelsInMemory {
         }
         
         String[] sortedArray = new String[genresSet.size()+1];
-        genresSet.toArray(sortedArray);
-        
-        
+        genresSet.toArray(sortedArray);        
         sortedArray[sortedArray.length-1] = sortedArray[0];
-        
         sortedArray[0]="Select Genre";
         
         for (int i = 2; i<sortedArray.length; i++){
@@ -107,30 +135,16 @@ class ModelsInMemory {
             }
             sortedArray[pos]=key;
         }
-        
         genres = sortedArray;
-        
     }
-    
-    
-    static Book[] getBooks() {
-        return books;
-    }
-    static String[] getGenres(){
-        return genres;
-    }
-    
-    static Borrow[] getBorrows(){
-        return borrows;
-    }
-    
-    
-    
-    
+    /**
+     * returns books if their titles contains the string passed as a parameter
+     * @param title
+     * @return 
+     */
     static Book[] getBooksByTitle(String title) {
+        
         ArrayList<Book> resultBooks = new ArrayList<>();
-        
-        
         for (int i = 0 ; i<books.length ; i++){
             
             Book b = books[i];
@@ -142,7 +156,11 @@ class ModelsInMemory {
         }
         return resultBooks.toArray(new Book[resultBooks.size()]);
     }
-    
+    /**
+     * returns the books if their authors name contains the string passed as a parameter
+     * @param author
+     * @return 
+     */
     static Book[] getBooksByAuthor(String author) {
         
         ArrayList<Book> resultBooks = new ArrayList<>();
@@ -158,7 +176,11 @@ class ModelsInMemory {
         }
         return resultBooks.toArray(new Book[resultBooks.size()]);
     }
-    
+    /**
+     * returns the books that contains the selected genre 
+     * @param selectedGenre
+     * @return 
+     */
     static Book[] getBooksByGenre(String selectedGenre) {
         ArrayList<Book> resultBooks = new ArrayList<>();
         
@@ -166,21 +188,17 @@ class ModelsInMemory {
         for (int i = 0 ; i<books.length ; i++){
             boolean containsGenre = false;
             ArrayList <String> genres =  new ArrayList<>(Arrays.asList(books[i].getGenres()));
-            
-            
             if(genres.contains(selectedGenre)){
                 resultBooks.add(books[i]);
             }
-            
-            
         }
         return resultBooks.toArray(new Book[resultBooks.size()]);
     }
     
-    static Reader[] getReaders() {
-        return readers;
-    }
-    
+    /**
+     * return the borrows that were not returned yet
+     * @return 
+     */
     static Borrow[] getBorrowsToReturn() {
         ArrayList<Borrow> borrowsToReturn = new ArrayList<>();
         
@@ -193,44 +211,11 @@ class ModelsInMemory {
         
         return borrowsToReturn.toArray(new Borrow[borrowsToReturn.size()]);
     }
-    
-//    static Borrow[] getBorrowsByBookTitle(String title) {
-//
-////        for (int i = 0; i<borrows.length; i++){
-////            if (borrows[i].getBookId().getTitle().toLowerCase().contains(title.toLowerCase())){
-////                borrowsToReturn.add(borrows[i]);
-////            }
-////        }
-//
-//        return borrowsToReturn.toArray(new Borrow[borrowsToReturn.size()]);
-//    }
-//
-//    static Borrow[] getBorrowsByReaderName(String readerName) {
-//        ArrayList<Borrow> borrowsToReturn = new ArrayList<>();
-//
-//
-//        for (int i = 0; i<borrows.length; i++){
-//            if (borrows[i].getReaderId().getFullName().toLowerCase().contains(readerName.toLowerCase())){
-//                borrowsToReturn.add(borrows[i]);
-//            }
-//        }
-//
-//        return borrowsToReturn.toArray(new Borrow[borrowsToReturn.size()]);
-//    }
-//
-//    static Borrow[] getBorrowsByBookAndReader(String bookTitle, String readerName) {
-//        ArrayList<Borrow> borrowsToReturn = new ArrayList<>();
-//
-//
-//        for (int i = 0; i<borrows.length; i++){
-//            if (borrows[i].getBookId().getTitle().toLowerCase().contains(bookTitle.toLowerCase()) && borrows[i].getReaderId().getFullName().toLowerCase().contains(readerName.toLowerCase())){
-//                borrowsToReturn.add(borrows[i]);
-//            }
-//        }
-//
-//        return borrowsToReturn.toArray(new Borrow[borrowsToReturn.size()]);
-//    }
-    
+    /**
+     * return the borrows of a specific reader
+     * @param readerId
+     * @return 
+     */
     static Borrow[] getBorrowsByReaderId(String readerId) {
         ArrayList<Borrow> borrowsToReturn = new ArrayList<>();
         
@@ -243,7 +228,10 @@ class ModelsInMemory {
         
         return borrowsToReturn.toArray(new Borrow[borrowsToReturn.size()]);
     }
-    
+    /**
+     * return active readers
+     * @return 
+     */
     static Reader[] getActiveReaders() {
         ArrayList<Reader> activeReaders = new ArrayList<>();
         for (int i = 0; i < readers.length; i++) {
@@ -255,7 +243,10 @@ class ModelsInMemory {
         
         return activeReaders.toArray(new Reader[activeReaders.size()]);
     }
-    
+    /**
+     * return only inactive readers
+     * @return 
+     */
     static Reader[] getInactiveReaders() {
         ArrayList<Reader> inactiveReaders = new ArrayList<>();
         for (int i = 0; i < readers.length; i++) {
@@ -265,10 +256,12 @@ class ModelsInMemory {
         }
         
         return inactiveReaders.toArray(new Reader[inactiveReaders.size()]);
-        
-        
     }
-    
+    /**
+     * get the borrows that contains a specific book
+     * @param bookId
+     * @return 
+     */
     static Borrow[] getBorrowsByBookId(String bookId) {
         ArrayList<Borrow> borrowsToReturn = new ArrayList<>();
         
@@ -281,7 +274,11 @@ class ModelsInMemory {
         
         return borrowsToReturn.toArray(new Borrow[borrowsToReturn.size()]);
     }
-    
+    /**
+     * returns a borrow by its Id
+     * @param borrowId
+     * @return 
+     */
     static Borrow getBorrowById(String borrowId) {
         for (int i = 0; i<borrows.length; i++){
             if (borrows[i].getId().equals(borrowId)){
@@ -291,37 +288,20 @@ class ModelsInMemory {
         
         return null;
     }
-    
-    
-    
-    
-    
-    
-    
+    /**
+     * returns readers that contains the string searched in their name
+     * @param readerName
+     * @return 
+     */
+    static Reader[] getReadersByName(String readerName) {
+        ArrayList<Reader> readersToReturn = new ArrayList<>();
+        
+        for (Reader r: readers) {
+            if(r.getFullName().toLowerCase().contains(readerName.toLowerCase())){
+                readersToReturn.add(r);
+            }
+        }
+        return readersToReturn.toArray(new Reader[readersToReturn.size()]);
+    }
 }
-//    public static Reader[] getQueueOfBook(String bookId){
-//        ArrayList<Reader> readers = new ArrayList<>();
-//        Book book = getBookById(bookId);
-//
-//        Queue queue = book.getQueue();
-//        if(queue==null){
-//            return readers.toArray(new Reader[readers.size()]);
-//        }
-//
-//        Reader current=null;
-//        do {
-//            current = getReaderById(queue.Dequeue());
-//            if(current!=null){
-//                readers.add(current);
-//            }
-//        }while(current!=null);
-//
-//        if(book.getQueue().First()==null){
-//            System.out.println("Fodeu");
-//        }
-//
-//
-//        return readers.toArray(new Reader[readers.size()]);
-//    }
-
 

@@ -154,17 +154,16 @@ public class ReaderRegister extends javax.swing.JInternalFrame {
                     "First Name: "+txtFirstName.getText().trim()+"\nLast Name: "+txtLastName.getText().trim()+"\nAddress: "+txtAddress.getText().trim()+"\nConfirm Register?"  ,"Confirm Register",
                     JOptionPane.YES_NO_OPTION);
             if(n==0){
-                
                 try {
                     rc.addNewReader(txtFirstName.getText(),txtLastName.getText(),txtAddress.getText());
+                    JOptionPane.showMessageDialog(this, "Reader Registered!");
                 } catch (IOException ex) {
                     Logger.getLogger(ReaderRegister.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (InvalidFileException ex) {
                     Logger.getLogger(ReaderRegister.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, "Check File !");
                 }
             }
-            
-            JOptionPane.showMessageDialog(this, "Reader Registered!");
             this.dispose();
             this.mf.showReaderRegister();
         }

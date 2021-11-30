@@ -26,10 +26,10 @@
               <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-              <Component id="jTextField1" min="-2" pref="116" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+              <Component id="txtReaderName" min="-2" pref="181" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
               <Component id="btnSearchName" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="169" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="124" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="btnReaderBorrows" min="-2" pref="230" max="-2" attributes="0"/>
                   <Component id="btnEditReader" min="-2" pref="230" max="-2" attributes="0"/>
@@ -60,7 +60,7 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnSearchName" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtReaderName" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                               <Component id="btnReaderBorrows" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -75,17 +75,17 @@
                   </Group>
                   <Component id="btnDeactivateReader" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" pref="15" max="32767" attributes="0"/>
-              <Component id="jScrollPane1" pref="545" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" pref="17" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="547" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JTextField" name="jTextField1">
+    <Component class="javax.swing.JTextField" name="txtReaderName">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtReaderNameActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
@@ -97,6 +97,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Serach By Name"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSearchNameActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
 

@@ -96,6 +96,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         btnRegisterBook.setText("Register New Book");
+        btnRegisterBook.setEnabled(false);
         btnRegisterBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegisterBookActionPerformed(evt);

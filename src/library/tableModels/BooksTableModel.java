@@ -14,9 +14,7 @@ import library.models.Book;
  * @author Francisco    
  */
 public class BooksTableModel extends AbstractTableModel {
-    //https://docs.oracle.com/javase/tutorial/uiswing/components/table.html#data
-    
-    //method to get image, title, genre and director in the rent frame
+    //https://docs.oracle.com/javase/tutorial/uiswing/components/table.html#data  
     
     private String[] columnNames = {"Title --A-Z-- ","Author --A-Z-- ","Genre","Available","id","movie"};
     private Book[ ] books;

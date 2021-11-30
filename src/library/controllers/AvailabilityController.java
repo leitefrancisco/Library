@@ -31,7 +31,7 @@ public class AvailabilityController extends BaseController<Availability> {
     public Availability[] loadFile() throws InvalidFileException, IOException{
         Availability[] avalabilities = getFileHandler().readFile();
         for (Availability ava : avalabilities) {
-            for(String s : ava.getWaitReadersId()){ // []
+            for(String s : ava.getWaitReadersId()){
                 Reader r = ModelsInMemory.getReaderById(s);
                 if(r != null)
                     ava.getQueue().enqueue(r);
