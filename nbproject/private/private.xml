@@ -3,26 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Xiquinho/Documents/NetBeansProjects/Library/src/library/controllers/BookController.java</file>
-            <file>file:/C:/Users/Xiquinho/Documents/NetBeansProjects/Library/src/library/io/BaseFileHandler.java</file>
-            <file>file:/C:/Users/Xiquinho/Documents/NetBeansProjects/Library/src/library/models/Book.java</file>
-            <file>file:/C:/Users/Xiquinho/Documents/NetBeansProjects/Library/src/library/utils/DateFormatUtil.java</file>
-            <file>file:/C:/Users/Xiquinho/Documents/NetBeansProjects/Library/src/library/controllers/AvailabilityController.java</file>
-            <file>file:/C:/Users/Xiquinho/Documents/NetBeansProjects/Library/src/library/models/Availability.java</file>
-            <file>file:/C:/Users/Xiquinho/Documents/NetBeansProjects/Library/src/library/controllers/ReaderController.java</file>
             <file>file:/C:/Users/Xiquinho/Documents/NetBeansProjects/Library/src/library/controllers/BaseController.java</file>
-            <file>file:/C:/Users/Xiquinho/Documents/NetBeansProjects/Library/src/library/views/BookQueue.java</file>
-            <file>file:/C:/Users/Xiquinho/Documents/NetBeansProjects/Library/src/library/views/MainFrame.java</file>
-            <file>file:/C:/Users/Xiquinho/Documents/NetBeansProjects/Library/src/library/tableModels/ReadersTableModel.java</file>
-            <file>file:/C:/Users/Xiquinho/Documents/NetBeansProjects/Library/src/library/io/BookFileHandler.java</file>
-            <file>file:/C:/Users/Xiquinho/Documents/NetBeansProjects/Library/src/library/controllers/BorrowController.java</file>
-            <file>file:/C:/Users/Xiquinho/Documents/NetBeansProjects/Library/src/library/io/ReaderFileHandler.java</file>
-            <file>file:/C:/Users/Xiquinho/Documents/NetBeansProjects/Library/src/library/io/AvailabilityFileHandler.java</file>
-            <file>file:/C:/Users/Xiquinho/Documents/NetBeansProjects/Library/src/library/models/BaseModel.java</file>
-            <file>file:/C:/Users/Xiquinho/Documents/NetBeansProjects/Library/src/library/tableModels/BooksTableModel.java</file>
-            <file>file:/C:/Users/Xiquinho/Documents/NetBeansProjects/Library/src/library/controllers/ModelsInMemory.java</file>
-            <file>file:/C:/Users/Xiquinho/Documents/NetBeansProjects/Library/src/library/io/BorrowFileHandler.java</file>
-            <file>file:/C:/Users/Xiquinho/Documents/NetBeansProjects/Library/src/library/tableModels/BorrowsTableModel.java</file>
         </group>
     </open-files>
 </project-private>

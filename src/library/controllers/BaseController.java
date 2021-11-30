@@ -9,14 +9,12 @@ import java.io.IOException;
 import library.io.BaseFileHandler;
 import library.utils.InvalidFileException;
 
-/**
- *
- * @author Francisco
+/** 
  * This is a generic base controller is used as a base controller to avoid writing the same code over and over again
  * it is used to tell the classes that extends from it what methods will be necessary to edit the files that keeps the data of the system.
  * This class is used to call the File Handlers which is our Database, respecting the MVC Approach, the views will call the controllers and the
  * controllers will call the file handlers which would be one of our models
- * 
+ * @author Francisco
  */
 public abstract class BaseController<T> {
     /**
