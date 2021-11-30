@@ -34,8 +34,6 @@ public class MainFrame extends javax.swing.JFrame {
         refreshMemory();
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        
-        
     }
     
     /**
